@@ -242,6 +242,7 @@
         .portal:nth-child(3) { border-color: var(--lime-green); animation-delay: 2s; }
         .portal:nth-child(4) { border-color: var(--yellow); animation-delay: 3s; }
         .portal:nth-child(5) { border-color: var(--hot-orange); animation-delay: 4s; }
+        .portal.bitcoin-portal { border-color: #f7931a; animation-delay: 0.5s; box-shadow: 0 0 30px rgba(247, 147, 26, 0.5), inset 0 0 20px rgba(247, 147, 26, 0.3); }
 
         .portal::before {
             content: '';
@@ -877,6 +878,11 @@
             <span class="portal-label">CONTACT</span>
         </a>
 
+        <a href="bitcoinclock.html" class="draggable portal bitcoin-portal" style="left: 140vw; top: 108vh;" data-nav="bitcoinclock">
+            <span class="portal-icon">₿</span>
+            <span class="portal-label">BTC CLOCK</span>
+        </a>
+
         <!-- FLOATING WINDOWS -->
         <div class="draggable float-window" style="left: 128vw; top: 118vh;">
             <div class="window-header">
@@ -1133,11 +1139,17 @@
             p.addEventListener('click', (e) => {
                 e.preventDefault();
                 const dest = p.dataset.nav;
+                const href = p.getAttribute('href');
                 document.body.style.transition = 'filter 0.2s';
                 document.body.style.filter = 'brightness(3) saturate(0)';
                 setTimeout(() => {
-                    document.body.style.filter = 'none';
-                    alert(`ENTERING: ${dest.toUpperCase()}\n\n[This would navigate to the ${dest} section]`);
+                    // If it's a real page link (contains .html), navigate to it
+                    if (href && href.includes('.html')) {
+                        window.location.href = href;
+                    } else {
+                        document.body.style.filter = 'none';
+                        alert(`ENTERING: ${dest.toUpperCase()}\n\n[This would navigate to the ${dest} section]`);
+                    }
                 }, 200);
             });
         });
