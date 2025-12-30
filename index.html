@@ -47,37 +47,35 @@
             50% { background-position: 100% 100%; }
         }
 
-        /* CUSTOM CURSOR */
+        /* CUSTOM CURSOR - CAT GIRL SPRITE */
         .cursor {
             position: fixed;
-            width: 30px;
-            height: 30px;
+            width: 64px;
+            height: 64px;
             pointer-events: none;
             z-index: 100000;
-            mix-blend-mode: difference;
+            background-image: url('data:image/png;base64,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');
+            background-size: contain;
+            background-repeat: no-repeat;
+            image-rendering: pixelated;
+            filter: drop-shadow(0 0 10px var(--hot-pink)) drop-shadow(0 0 20px var(--electric-blue));
+            animation: cursorBob 1s ease-in-out infinite;
+            transform-origin: center center;
         }
 
-        .cursor-inner {
-            width: 100%;
-            height: 100%;
-            border: 3px solid var(--yellow);
-            background: var(--hot-pink);
-            animation: cursorPulse 0.5s ease-in-out infinite;
+        @keyframes cursorBob {
+            0%, 100% { transform: translateY(0) rotate(-3deg); }
+            50% { transform: translateY(-5px) rotate(3deg); }
         }
 
-        @keyframes cursorPulse {
-            0%, 100% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.2) rotate(90deg); }
-        }
-
-        .cursor.clicked .cursor-inner {
+        .cursor.clicked {
             animation: cursorClick 0.2s ease-out;
         }
 
         @keyframes cursorClick {
-            0% { transform: scale(1); }
-            50% { transform: scale(2); }
-            100% { transform: scale(1); }
+            0% { transform: scale(1); filter: drop-shadow(0 0 10px var(--hot-pink)); }
+            50% { transform: scale(1.3); filter: drop-shadow(0 0 30px var(--yellow)) drop-shadow(0 0 50px var(--hot-pink)); }
+            100% { transform: scale(1); filter: drop-shadow(0 0 10px var(--hot-pink)); }
         }
 
         /* THE INFINITE PLAYGROUND */
@@ -350,6 +348,171 @@
             filter: drop-shadow(0 0 40px currentColor) brightness(1.5);
         }
 
+        /* ===== PIXEL CREATURES ===== */
+        .pixel-creature {
+            width: 64px;
+            height: 64px;
+            image-rendering: pixelated;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .pixel-creature:hover {
+            transform: scale(1.5);
+            filter: brightness(1.5) drop-shadow(0 0 20px currentColor);
+            z-index: 1000;
+        }
+
+        /* Creature 1: Glitch Entity - Eye with tentacles */
+        .creature-1 {
+            background: 
+                radial-gradient(circle at 50% 40%, #fff 8px, transparent 8px),
+                radial-gradient(circle at 50% 40%, #ff00ff 12px, transparent 12px),
+                radial-gradient(circle at 50% 50%, #00ffff 25px, transparent 25px),
+                linear-gradient(180deg, transparent 60%, #ff00ff 60%, #ff00ff 65%, transparent 65%),
+                linear-gradient(180deg, transparent 70%, #00ffff 70%, #00ffff 75%, transparent 75%),
+                linear-gradient(180deg, transparent 80%, #ff00ff 80%, #ff00ff 85%, transparent 85%);
+            border-radius: 50% 50% 20% 20%;
+            box-shadow: 0 0 20px #ff00ff;
+        }
+
+        /* Creature 2: Void Walker - Geometric ghost */
+        .creature-2 {
+            background: linear-gradient(135deg, #00ffff 25%, transparent 25%),
+                        linear-gradient(225deg, #00ffff 25%, transparent 25%),
+                        linear-gradient(45deg, #ff00ff 25%, transparent 25%),
+                        linear-gradient(315deg, #ff00ff 25%, transparent 25%);
+            background-size: 16px 16px;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            box-shadow: 0 0 20px #00ffff;
+        }
+
+        /* Creature 3: Data Spirit - Pixelated face */
+        .creature-3 {
+            background: #39ff14;
+            clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
+            box-shadow: 
+                inset 15px 15px 0 5px #000,
+                inset 40px 15px 0 5px #000,
+                inset 25px 35px 0 15px #000,
+                0 0 20px #39ff14;
+        }
+
+        /* Creature 4: Cyber Ghost - Floating sheet */
+        .creature-4 {
+            background: linear-gradient(180deg, #fff 0%, #ff00ff 50%, transparent 100%);
+            clip-path: polygon(10% 0%, 90% 0%, 100% 30%, 95% 60%, 85% 100%, 70% 85%, 50% 100%, 30% 85%, 15% 100%, 5% 60%, 0% 30%);
+            box-shadow: 0 0 30px #ff00ff;
+        }
+
+        /* Creature 5: Pixel Demon - Horned creature */
+        .creature-5 {
+            background: #ff0066;
+            clip-path: polygon(20% 20%, 0% 0%, 15% 30%, 0% 50%, 20% 100%, 80% 100%, 100% 50%, 85% 30%, 100% 0%, 80% 20%, 50% 10%);
+            box-shadow: 0 0 20px #ff0066;
+        }
+
+        /* Creature 6: Neon Specter - Trailing form */
+        .creature-6 {
+            background: linear-gradient(90deg, #ffff00, #ff6600, #ff0066, transparent);
+            clip-path: ellipse(50% 30% at 30% 50%);
+            box-shadow: 0 0 30px #ffff00;
+        }
+
+        /* Creature 7: Bit Wraith - Skull shape */
+        .creature-7 {
+            background: #00ffff;
+            clip-path: polygon(25% 0%, 75% 0%, 100% 30%, 100% 60%, 75% 100%, 60% 80%, 50% 100%, 40% 80%, 25% 100%, 0% 60%, 0% 30%);
+            box-shadow: 
+                inset 15px 20px 0 5px #000,
+                inset 40px 20px 0 5px #000,
+                inset 20px 45px 0 3px #000,
+                inset 30px 45px 0 3px #000,
+                inset 40px 45px 0 3px #000,
+                0 0 20px #00ffff;
+        }
+
+        /* Creature 8: Hex Phantom - Diamond shape */
+        .creature-8 {
+            background: linear-gradient(45deg, #ff00ff 50%, #6600ff 50%);
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            box-shadow: 0 0 25px #ff00ff;
+        }
+
+        /* Creature 9: Vector Beast - Arrow creature */
+        .creature-9 {
+            background: #39ff14;
+            clip-path: polygon(0% 30%, 60% 30%, 60% 0%, 100% 50%, 60% 100%, 60% 70%, 0% 70%);
+            box-shadow: 0 0 20px #39ff14;
+        }
+
+        /* Creature 10: Null Entity - Void hole */
+        .creature-10 {
+            background: radial-gradient(circle, #000 30%, #ff00ff 50%, #00ffff 70%, transparent 80%);
+            border-radius: 50%;
+            box-shadow: 0 0 30px #ff00ff, inset 0 0 20px #000;
+        }
+
+        /* Creature 11: The Watcher - Giant eye */
+        .creature-11 {
+            width: 80px;
+            height: 80px;
+            background: 
+                radial-gradient(circle at 50% 50%, #000 10px, #ff0066 12px, #ff0066 20px, #fff 22px, #fff 35px, transparent 37px);
+            border-radius: 50%;
+            box-shadow: 0 0 40px #ff0066;
+        }
+
+        /* Creature 12: Static Being - TV static */
+        .creature-12 {
+            background: repeating-linear-gradient(
+                0deg,
+                #fff 0px, #fff 2px,
+                #000 2px, #000 4px,
+                #ff00ff 4px, #ff00ff 6px,
+                #00ffff 6px, #00ffff 8px
+            );
+            clip-path: polygon(20% 0%, 80% 0%, 100% 50%, 80% 100%, 20% 100%, 0% 50%);
+            animation: staticNoise 0.1s steps(5) infinite;
+            box-shadow: 0 0 15px #fff;
+        }
+
+        @keyframes staticNoise {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 20px; }
+        }
+
+        /* Creature 13: Chaos Node - Spiky ball */
+        .creature-13 {
+            background: #ffff00;
+            clip-path: polygon(50% 0%, 60% 35%, 100% 35%, 70% 55%, 80% 100%, 50% 70%, 20% 100%, 30% 55%, 0% 35%, 40% 35%);
+            box-shadow: 0 0 25px #ffff00;
+        }
+
+        /* Creature 14: Dream Shard - Crystal */
+        .creature-14 {
+            background: linear-gradient(180deg, #ff00ff, #00ffff, #39ff14);
+            clip-path: polygon(50% 0%, 85% 25%, 85% 75%, 50% 100%, 15% 75%, 15% 25%);
+            box-shadow: 0 0 30px #ff00ff;
+            opacity: 0.8;
+        }
+
+        /* Creature 15: Ether Form - Blob */
+        .creature-15 {
+            background: radial-gradient(ellipse at 30% 30%, #fff, #00ffff, #ff00ff);
+            border-radius: 60% 40% 50% 70% / 50% 60% 40% 50%;
+            box-shadow: 0 0 25px #00ffff;
+        }
+
+        .floating {
+            animation: creatureFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes creatureFloat {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
         .spinning { animation: spin 6s linear infinite; }
         .pulsing { animation: pulse 1.5s ease-in-out infinite; }
         .wobbling { animation: wobble 3s ease-in-out infinite; }
@@ -586,10 +749,12 @@
         /* ===== TRAILS & EFFECTS ===== */
         .trail {
             position: fixed;
-            width: 12px;
-            height: 12px;
+            width: 8px;
+            height: 8px;
             pointer-events: none;
             z-index: 99999;
+            border-radius: 50%;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
         }
 
         .click-particle {
@@ -597,6 +762,7 @@
             font-size: 1.5rem;
             pointer-events: none;
             z-index: 99998;
+            text-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
         }
 
         /* ===== SCANLINES ===== */
@@ -640,10 +806,8 @@
     <!-- 3D WORMHOLE BACKGROUND -->
     <canvas id="wormholeCanvas"></canvas>
 
-    <!-- CURSOR -->
-    <div class="cursor" id="cursor">
-        <div class="cursor-inner"></div>
-    </div>
+    <!-- CURSOR - CAT GIRL SPRITE -->
+    <div class="cursor" id="cursor"></div>
 
     <!-- OVERLAYS -->
     <div class="scanlines"></div>
@@ -802,18 +966,22 @@
             <span class="dancer">🕺</span>
         </div>
 
-        <!-- WEIRD FLOATING OBJECTS -->
-        <div class="draggable weird-obj spinning" style="left: 108vw; top: 140vh; color: var(--hot-pink);">🛸</div>
-        <div class="draggable weird-obj pulsing" style="left: 192vw; top: 135vh; color: var(--electric-blue);">👽</div>
-        <div class="draggable weird-obj wobbling" style="left: 125vw; top: 142vh; color: var(--lime-green);">🔮</div>
-        <div class="draggable weird-obj spinning" style="left: 175vw; top: 155vh; color: var(--yellow);">⚡</div>
-        <div class="draggable weird-obj pulsing" style="left: 145vw; top: 112vh; color: var(--hot-orange);">🌙</div>
-        <div class="draggable weird-obj wobbling" style="left: 188vw; top: 188vh; color: var(--hot-pink);">🎭</div>
-        <div class="draggable weird-obj shaking" style="left: 112vw; top: 185vh; color: var(--electric-blue);">💀</div>
-        <div class="draggable weird-obj spinning" style="left: 160vw; top: 108vh; color: var(--lime-green);">🛰️</div>
-        <div class="draggable weird-obj" style="left: 105vw; top: 118vh; font-size: 6rem; color: var(--yellow);">🚀</div>
-        <div class="draggable weird-obj" style="left: 195vw; top: 195vh; font-size: 6rem; color: var(--hot-pink);">🕳️</div>
-        <div class="draggable weird-obj pulsing" style="left: 150vw; top: 130vh; font-size: 5rem; color: var(--electric-blue);">👁️</div>
+        <!-- WEIRD FLOATING OBJECTS - CSS PIXEL CREATURES -->
+        <div class="draggable pixel-creature creature-1 floating" style="left: 108vw; top: 140vh;" title="GLITCH_ENTITY_01"></div>
+        <div class="draggable pixel-creature creature-2 spinning" style="left: 192vw; top: 135vh;" title="VOID_WALKER"></div>
+        <div class="draggable pixel-creature creature-3 pulsing" style="left: 125vw; top: 142vh;" title="DATA_SPIRIT"></div>
+        <div class="draggable pixel-creature creature-4 wobbling" style="left: 175vw; top: 155vh;" title="CYBER_GHOST"></div>
+        <div class="draggable pixel-creature creature-5 floating" style="left: 145vw; top: 112vh;" title="PIXEL_DEMON"></div>
+        <div class="draggable pixel-creature creature-6 spinning" style="left: 188vw; top: 188vh;" title="NEON_SPECTER"></div>
+        <div class="draggable pixel-creature creature-7 pulsing" style="left: 112vw; top: 185vh;" title="BIT_WRAITH"></div>
+        <div class="draggable pixel-creature creature-8 wobbling" style="left: 160vw; top: 108vh;" title="HEX_PHANTOM"></div>
+        <div class="draggable pixel-creature creature-9 floating" style="left: 105vw; top: 118vh;" title="VECTOR_BEAST"></div>
+        <div class="draggable pixel-creature creature-10 spinning" style="left: 195vw; top: 195vh;" title="NULL_ENTITY"></div>
+        <div class="draggable pixel-creature creature-11 pulsing" style="left: 150vw; top: 130vh;" title="THE_WATCHER"></div>
+        <div class="draggable pixel-creature creature-12 wobbling" style="left: 135vw; top: 175vh;" title="STATIC_BEING"></div>
+        <div class="draggable pixel-creature creature-13 floating" style="left: 165vw; top: 125vh;" title="CHAOS_NODE"></div>
+        <div class="draggable pixel-creature creature-14 pulsing" style="left: 118vw; top: 155vh;" title="DREAM_SHARD"></div>
+        <div class="draggable pixel-creature creature-15 spinning" style="left: 182vw; top: 142vh;" title="ETHER_FORM"></div>
 
         <!-- SECRET ZONES -->
         <div class="secret-zone" style="left: 102vw; top: 150vh;" data-secret="1">🗝️</div>
@@ -866,16 +1034,17 @@
             t.className = 'trail';
             t.style.left = x + 'px';
             t.style.top = y + 'px';
-            const colors = ['var(--hot-pink)', 'var(--electric-blue)', 'var(--lime-green)', 'var(--yellow)'];
+            const colors = ['#00f0ff', '#ff69b4', '#ffd700', '#00ffff', '#ff00ff'];
             t.style.background = colors[Math.floor(Math.random() * colors.length)];
+            t.style.boxShadow = `0 0 10px ${t.style.background}, 0 0 20px ${t.style.background}`;
             document.body.appendChild(t);
 
             t.animate([
-                { opacity: 0.8, transform: 'scale(1) rotate(0deg)' },
-                { opacity: 0, transform: 'scale(0) rotate(180deg)' }
-            ], { duration: 600, easing: 'ease-out' });
+                { opacity: 1, transform: 'scale(1) rotate(0deg)' },
+                { opacity: 0, transform: 'scale(0.2) rotate(360deg)' }
+            ], { duration: 500, easing: 'ease-out' });
 
-            setTimeout(() => t.remove(), 600);
+            setTimeout(() => t.remove(), 500);
         }
 
         // Click effects
@@ -883,9 +1052,9 @@
             cursor.classList.add('clicked');
             setTimeout(() => cursor.classList.remove('clicked'), 200);
 
-            // Particle burst
-            const particles = ['✦', '★', '✧', '⚡', '💥', '✨'];
-            for (let i = 0; i < 6; i++) {
+            // Magical particle burst
+            const particles = ['✦', '★', '✧', '✨', '💫', '⭐', '🌟', '✴'];
+            for (let i = 0; i < 8; i++) {
                 const p = document.createElement('div');
                 p.className = 'click-particle';
                 p.textContent = particles[Math.floor(Math.random() * particles.length)];
