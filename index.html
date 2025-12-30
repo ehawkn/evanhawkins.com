@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EVAN HAWKINS</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Russo+One&family=Permanent+Marker&family=VT323&family=Bungee+Inline&family=Silkscreen&family=Space+Mono&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --electric-blue: #00ffff;
+            --hot-orange: #ff6600;
+            --lime-green: #00ff00;
+            --hot-pink: #ff00ff;
+            --yellow: #ffff00;
+            --red: #ff0000;
+            --void: #0a0a15;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: transparent;
+            cursor: none;
+        }
+
+        /* 3D WORMHOLE BACKGROUND */
+        #wormholeCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* ANIMATED BACKGROUND */
+        @keyframes bgShift {
+            0%, 100% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+        }
+
+        /* CUSTOM CURSOR */
+        .cursor {
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            pointer-events: none;
+            z-index: 100000;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-inner {
+            width: 100%;
+            height: 100%;
+            border: 3px solid var(--yellow);
+            background: var(--hot-pink);
+            animation: cursorPulse 0.5s ease-in-out infinite;
+        }
+
+        @keyframes cursorPulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.2) rotate(90deg); }
+        }
+
+        .cursor.clicked .cursor-inner {
+            animation: cursorClick 0.2s ease-out;
+        }
+
+        @keyframes cursorClick {
+            0% { transform: scale(1); }
+            50% { transform: scale(2); }
+            100% { transform: scale(1); }
+        }
+
+        /* THE INFINITE PLAYGROUND */
+        .playground {
+            position: absolute;
+            width: 300vw;
+            height: 300vh;
+            left: -100vw;
+            top: -100vh;
+            background: 
+                radial-gradient(ellipse 600px 600px at 130vw 140vh, rgba(255,0,255,0.1) 0%, transparent 70%),
+                radial-gradient(ellipse 500px 500px at 170vw 160vh, rgba(0,255,255,0.1) 0%, transparent 70%),
+                radial-gradient(ellipse 400px 400px at 150vw 120vh, rgba(255,255,0,0.05) 0%, transparent 70%),
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 80px,
+                    rgba(255,0,255,0.02) 80px,
+                    rgba(255,0,255,0.02) 81px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 80px,
+                    rgba(0,255,255,0.02) 80px,
+                    rgba(0,255,255,0.02) 81px
+                );
+            cursor: none;
+        }
+
+        /* DRAGGABLE OBJECTS */
+        .draggable {
+            position: absolute;
+            cursor: grab;
+            user-select: none;
+            transition: filter 0.2s;
+        }
+
+        .draggable:active { cursor: grabbing; }
+        .draggable.dragging { z-index: 50000 !important; }
+        .draggable:hover { filter: drop-shadow(0 0 20px white); z-index: 1000; }
+
+        /* ===== CHAOS HEADER BANNER ===== */
+        .chaos-banner {
+            position: absolute;
+            left: 100vw;
+            top: 108vh;
+            width: 100vw;
+            background: linear-gradient(90deg, var(--red), var(--hot-orange), var(--yellow), var(--lime-green), var(--electric-blue), var(--hot-pink));
+            background-size: 600% 100%;
+            animation: gradientMove 3s linear infinite;
+            padding: 15px 0;
+            border: 5px solid white;
+            overflow: hidden;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        .banner-text {
+            font-family: 'Russo One', sans-serif;
+            font-size: 1.2rem;
+            color: white;
+            text-shadow: 3px 3px 0 black;
+            white-space: nowrap;
+            animation: marquee 15s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* ===== MAIN IDENTITY ===== */
+        .main-entity {
+            position: absolute;
+            left: 150vw;
+            top: 150vh;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 100;
+        }
+
+        .entity-name {
+            font-family: 'Bungee Inline', cursive;
+            font-size: clamp(4rem, 12vw, 10rem);
+            color: white;
+            text-shadow:
+                5px 5px 0 var(--hot-pink),
+                -5px -5px 0 var(--electric-blue),
+                10px 10px 0 var(--hot-orange);
+            animation: nameGlitch 8s ease-in-out infinite, colorShift 4s linear infinite;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .entity-name:hover {
+            transform: scale(1.1) rotate(-2deg);
+        }
+
+        @keyframes nameGlitch {
+            0%, 90%, 100% { transform: translate(0); }
+            92% { transform: translate(-8px, 5px) skewX(2deg); }
+            94% { transform: translate(8px, -5px) skewX(-2deg); }
+            96% { transform: translate(-5px, 0); }
+            98% { transform: translate(5px, 0); }
+        }
+
+        @keyframes colorShift {
+            0%, 100% { 
+                text-shadow: 5px 5px 0 var(--hot-pink), -5px -5px 0 var(--electric-blue), 10px 10px 0 var(--hot-orange);
+            }
+            33% { 
+                text-shadow: 5px 5px 0 var(--electric-blue), -5px -5px 0 var(--lime-green), 10px 10px 0 var(--hot-pink);
+            }
+            66% { 
+                text-shadow: 5px 5px 0 var(--yellow), -5px -5px 0 var(--hot-pink), 10px 10px 0 var(--electric-blue);
+            }
+        }
+
+        .entity-tagline {
+            font-family: 'VT323', monospace;
+            font-size: 1.5rem;
+            color: var(--lime-green);
+            letter-spacing: 0.3em;
+            margin-top: 20px;
+            animation: flicker 2s ease-in-out infinite;
+        }
+
+        @keyframes flicker {
+            0%, 90%, 100% { opacity: 1; }
+            92% { opacity: 0.3; }
+            94% { opacity: 0.8; }
+            96% { opacity: 0.2; }
+            98% { opacity: 1; }
+        }
+
+        /* ===== NAVIGATION PORTALS ===== */
+        .portal {
+            width: 160px;
+            height: 160px;
+            border: 5px solid;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: white;
+            background: rgba(0,0,0,0.7);
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: portalFloat 5s ease-in-out infinite;
+        }
+
+        @keyframes portalFloat {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+        }
+
+        .portal:nth-child(1) { border-color: var(--hot-pink); animation-delay: 0s; }
+        .portal:nth-child(2) { border-color: var(--electric-blue); animation-delay: 1s; }
+        .portal:nth-child(3) { border-color: var(--lime-green); animation-delay: 2s; }
+        .portal:nth-child(4) { border-color: var(--yellow); animation-delay: 3s; }
+        .portal:nth-child(5) { border-color: var(--hot-orange); animation-delay: 4s; }
+
+        .portal::before {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border: 3px dashed currentColor;
+            opacity: 0.5;
+            animation: borderSpin 10s linear infinite;
+        }
+
+        @keyframes borderSpin {
+            100% { transform: rotate(360deg); }
+        }
+
+        .portal:hover {
+            transform: scale(1.2) rotate(0deg) !important;
+            box-shadow: 0 0 50px currentColor;
+            z-index: 1000;
+        }
+
+        .portal-icon {
+            font-size: 3.5rem;
+            animation: iconBounce 1s ease-in-out infinite;
+        }
+
+        @keyframes iconBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .portal-label {
+            font-family: 'Bangers', cursive;
+            font-size: 1.2rem;
+            letter-spacing: 0.1em;
+            margin-top: 10px;
+            text-shadow: 2px 2px 0 black;
+        }
+
+        /* ===== FLOATING WINDOWS ===== */
+        .float-window {
+            background: rgba(10, 10, 21, 0.95);
+            border: 4px solid var(--hot-pink);
+            min-width: 220px;
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.3);
+        }
+
+        .window-header {
+            background: var(--hot-pink);
+            padding: 8px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .window-title {
+            font-family: 'Silkscreen', monospace;
+            font-size: 11px;
+            color: black;
+        }
+
+        .window-btns {
+            display: flex;
+            gap: 5px;
+        }
+
+        .window-btn {
+            width: 14px;
+            height: 14px;
+            background: black;
+            border: 2px solid white;
+            font-size: 10px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .window-content {
+            padding: 15px;
+            font-family: 'VT323', monospace;
+            font-size: 16px;
+            color: var(--lime-green);
+            line-height: 1.6;
+        }
+
+        .float-window:nth-child(even) {
+            border-color: var(--electric-blue);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+        }
+
+        .float-window:nth-child(even) .window-header {
+            background: var(--electric-blue);
+        }
+
+        /* ===== WEIRD FLOATING OBJECTS ===== */
+        .weird-obj {
+            font-size: 4rem;
+            filter: drop-shadow(0 0 15px currentColor);
+            transition: all 0.3s;
+        }
+
+        .weird-obj:hover {
+            transform: scale(1.5) rotate(20deg);
+            filter: drop-shadow(0 0 40px currentColor) brightness(1.5);
+        }
+
+        .spinning { animation: spin 6s linear infinite; }
+        .pulsing { animation: pulse 1.5s ease-in-out infinite; }
+        .wobbling { animation: wobble 3s ease-in-out infinite; }
+        .shaking { animation: shake 0.5s ease-in-out infinite; }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.3); } }
+        @keyframes wobble { 0%, 100% { transform: rotate(-15deg); } 50% { transform: rotate(15deg); } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+
+        /* ===== SECRET ZONES ===== */
+        .secret-zone {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,0,0.1), transparent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            opacity: 0;
+            transition: all 0.5s;
+            pointer-events: none;
+        }
+
+        .secret-zone.revealed {
+            opacity: 1;
+            animation: secretReveal 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes secretReveal {
+            0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        /* ===== GUESTBOOK ===== */
+        .guestbook {
+            background: linear-gradient(135deg, var(--hot-orange), var(--hot-pink));
+            border: 5px double white;
+            padding: 20px;
+            width: 350px;
+        }
+
+        .guestbook-title {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 1.8rem;
+            color: white;
+            text-shadow: 3px 3px 0 black;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .guestbook-entry {
+            background: white;
+            border: 3px solid black;
+            padding: 12px;
+            margin: 10px 0;
+            transform: rotate(-1deg);
+        }
+
+        .guestbook-entry:nth-child(odd) { transform: rotate(1deg); }
+
+        .entry-name {
+            font-family: 'Bangers', cursive;
+            font-size: 1.1rem;
+            color: var(--hot-pink);
+        }
+
+        .entry-text {
+            font-family: 'VT323', monospace;
+            font-size: 14px;
+            color: black;
+            margin-top: 5px;
+        }
+
+        /* ===== VISITOR COUNTER ===== */
+        .counter-box {
+            background: black;
+            border: 5px ridge var(--lime-green);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .counter-label {
+            font-family: 'Silkscreen', monospace;
+            font-size: 12px;
+            color: var(--yellow);
+            margin-bottom: 15px;
+        }
+
+        .counter-display {
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .counter-digit {
+            width: 35px;
+            height: 50px;
+            background: #111;
+            border: 2px inset var(--lime-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'VT323', monospace;
+            font-size: 2rem;
+            color: var(--lime-green);
+            text-shadow: 0 0 10px var(--lime-green);
+        }
+
+        /* ===== CONSTRUCTION TAPE ===== */
+        .construction {
+            position: absolute;
+            width: 100vw;
+            padding: 12px 0;
+            background: repeating-linear-gradient(
+                45deg,
+                var(--yellow),
+                var(--yellow) 20px,
+                black 20px,
+                black 40px
+            );
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .construction-text {
+            font-family: 'Russo One', sans-serif;
+            font-size: 1rem;
+            color: var(--red);
+            background: black;
+            padding: 5px 15px;
+            animation: blink 0.5s steps(1) infinite;
+        }
+
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .construction-icon {
+            font-size: 2rem;
+            animation: spin 2s linear infinite;
+        }
+
+        /* ===== DANCING ELEMENTS ===== */
+        .dancers {
+            position: absolute;
+            display: flex;
+            gap: 30px;
+        }
+
+        .dancer {
+            font-size: 4rem;
+            animation: dance 0.6s ease-in-out infinite;
+        }
+
+        @keyframes dance {
+            0%, 100% { transform: translateY(0) scaleX(1); }
+            50% { transform: translateY(-20px) scaleX(-1); }
+        }
+
+        .dancer:nth-child(2) { animation-delay: 0.1s; }
+        .dancer:nth-child(3) { animation-delay: 0.2s; }
+        .dancer:nth-child(4) { animation-delay: 0.3s; }
+        .dancer:nth-child(5) { animation-delay: 0.4s; }
+
+        /* ===== UI OVERLAYS ===== */
+        .ui-element {
+            position: fixed;
+            z-index: 1000;
+            font-family: 'Silkscreen', monospace;
+        }
+
+        .coords {
+            top: 20px;
+            left: 20px;
+            font-size: 12px;
+            color: var(--electric-blue);
+        }
+
+        .discovered {
+            top: 50px;
+            left: 20px;
+            font-size: 11px;
+            color: var(--hot-pink);
+        }
+
+        .hint {
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 0.2em;
+        }
+
+        .minimap {
+            bottom: 20px;
+            right: 20px;
+            width: 130px;
+            height: 130px;
+            border: 3px solid var(--hot-pink);
+            background: rgba(0,0,0,0.7);
+        }
+
+        .minimap-view {
+            position: absolute;
+            border: 2px solid var(--electric-blue);
+            background: rgba(0, 255, 255, 0.2);
+        }
+
+        .status-bar {
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 10px 20px;
+            background: rgba(0,0,0,0.9);
+            border-top: 3px solid var(--hot-pink);
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: var(--lime-green);
+        }
+
+        .status-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--lime-green);
+            margin-right: 8px;
+            animation: blink 1s steps(1) infinite;
+        }
+
+        /* ===== TRAILS & EFFECTS ===== */
+        .trail {
+            position: fixed;
+            width: 12px;
+            height: 12px;
+            pointer-events: none;
+            z-index: 99999;
+        }
+
+        .click-particle {
+            position: fixed;
+            font-size: 1.5rem;
+            pointer-events: none;
+            z-index: 99998;
+        }
+
+        /* ===== SCANLINES ===== */
+        .scanlines {
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0,255,255,0.02) 2px,
+                rgba(0,255,255,0.02) 4px
+            );
+            pointer-events: none;
+            z-index: 10000;
+        }
+
+        /* ===== GLITCH OVERLAY ===== */
+        .glitch-overlay {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 10001;
+            opacity: 0;
+        }
+
+        .glitch-overlay.active {
+            animation: glitchFlash 0.15s steps(2);
+        }
+
+        @keyframes glitchFlash {
+            0% { opacity: 0; background: var(--hot-pink); }
+            25% { opacity: 0.1; background: var(--electric-blue); }
+            50% { opacity: 0; }
+            75% { opacity: 0.1; background: var(--lime-green); }
+            100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 3D WORMHOLE BACKGROUND -->
+    <canvas id="wormholeCanvas"></canvas>
+
+    <!-- CURSOR -->
+    <div class="cursor" id="cursor">
+        <div class="cursor-inner"></div>
+    </div>
+
+    <!-- OVERLAYS -->
+    <div class="scanlines"></div>
+    <div class="glitch-overlay" id="glitch"></div>
+
+    <!-- UI -->
+    <div class="ui-element coords">X:<span id="coordX">0</span> Y:<span id="coordY">0</span></div>
+    <div class="ui-element discovered">SECRETS: <span id="found">0</span>/8</div>
+    <div class="ui-element hint">DRAG TO EXPLORE • CLICK PORTALS • FIND SECRETS</div>
+    <div class="ui-element minimap">
+        <div class="minimap-view" id="mapView"></div>
+    </div>
+    <div class="ui-element status-bar">
+        <span><span class="status-dot"></span>CONNECTED TO VOID</span>
+        <span>LOCATION: EVANHAWKINS.COM</span>
+        <span>VIBES: IMMACULATE</span>
+    </div>
+
+    <!-- THE PLAYGROUND -->
+    <div class="playground" id="playground">
+
+        <!-- CHAOS BANNER -->
+        <div class="chaos-banner">
+            <span class="banner-text">
+                ★ WELCOME TO EVAN HAWKINS DOT COM ★ 接続中 ★ ENTER THE VOID ★ DRAG EVERYTHING ★ FIND THE SECRETS ★ ネオ東京 ★ REALITY IS OPTIONAL ★ HAVE FUN ★
+            </span>
+        </div>
+
+        <!-- CONSTRUCTION TAPE -->
+        <div class="construction" style="left: 100vw; top: 192vh;">
+            <span class="construction-icon">🚧</span>
+            <span class="construction-text">FOREVER UNDER CONSTRUCTION</span>
+            <span class="construction-icon">⚠️</span>
+            <span class="construction-text">BEST VIEWED WITH CHAOS</span>
+            <span class="construction-icon">🚧</span>
+        </div>
+
+        <!-- MAIN IDENTITY -->
+        <div class="main-entity" id="mainEntity">
+            <h1 class="entity-name">EVAN HAWKINS</h1>
+            <p class="entity-tagline">[ DIGITAL ENTITY ]</p>
+        </div>
+
+        <!-- NAVIGATION PORTALS -->
+        <a href="#about" class="draggable portal" style="left: 118vw; top: 125vh;" data-nav="about">
+            <span class="portal-icon">👁️</span>
+            <span class="portal-label">ABOUT</span>
+        </a>
+
+        <a href="#work" class="draggable portal" style="left: 178vw; top: 122vh;" data-nav="work">
+            <span class="portal-icon">💾</span>
+            <span class="portal-label">WORK</span>
+        </a>
+
+        <a href="#archive" class="draggable portal" style="left: 182vw; top: 172vh;" data-nav="archive">
+            <span class="portal-icon">📁</span>
+            <span class="portal-label">ARCHIVE</span>
+        </a>
+
+        <a href="#blog" class="draggable portal" style="left: 115vw; top: 175vh;" data-nav="blog">
+            <span class="portal-icon">📡</span>
+            <span class="portal-label">BLOG</span>
+        </a>
+
+        <a href="#contact" class="draggable portal" style="left: 150vw; top: 188vh;" data-nav="contact">
+            <span class="portal-icon">📧</span>
+            <span class="portal-label">CONTACT</span>
+        </a>
+
+        <!-- FLOATING WINDOWS -->
+        <div class="draggable float-window" style="left: 128vw; top: 118vh;">
+            <div class="window-header">
+                <span class="window-title">welcome.txt</span>
+                <div class="window-btns">
+                    <div class="window-btn">–</div>
+                    <div class="window-btn">×</div>
+                </div>
+            </div>
+            <div class="window-content">
+                > HELLO WORLD_<br>
+                > YOU FOUND ME<br>
+                > DRAG TO EXPLORE<br>
+                > CLICK PORTALS TO ENTER<br>
+                > SECRETS ARE HIDDEN<br>
+                > GOOD LUCK :)
+            </div>
+        </div>
+
+        <div class="draggable float-window" style="left: 168vw; top: 145vh;">
+            <div class="window-header">
+                <span class="window-title">status.log</span>
+                <div class="window-btns">
+                    <div class="window-btn">–</div>
+                    <div class="window-btn">×</div>
+                </div>
+            </div>
+            <div class="window-content">
+                LOCATION: THE VOID<br>
+                STATUS: EXPLORING<br>
+                MOOD: ████████<br>
+                COFFEE: REQUIRED<br>
+                VIBES: ∞
+            </div>
+        </div>
+
+        <div class="draggable float-window" style="left: 122vw; top: 158vh;">
+            <div class="window-header">
+                <span class="window-title">secrets.enc</span>
+                <div class="window-btns">
+                    <div class="window-btn">–</div>
+                    <div class="window-btn">×</div>
+                </div>
+            </div>
+            <div class="window-content">
+                ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓<br>
+                ▓ 8 SECRETS    ▓<br>
+                ▓ HIDDEN HERE  ▓<br>
+                ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓<br>
+                (keep looking)
+            </div>
+        </div>
+
+        <!-- GUESTBOOK -->
+        <div class="draggable guestbook" style="left: 170vw; top: 178vh;">
+            <div class="guestbook-title">📝 GUESTBOOK 📝</div>
+            <div class="guestbook-entry">
+                <div class="entry-name">xX_V01D_SURF3R_Xx</div>
+                <div class="entry-text">this site gave me psychic damage 10/10</div>
+            </div>
+            <div class="guestbook-entry">
+                <div class="entry-name">カオスマスター</div>
+                <div class="entry-text">finally someone who GETS IT 🔥</div>
+            </div>
+        </div>
+
+        <!-- VISITOR COUNTER -->
+        <div class="draggable counter-box" style="left: 135vw; top: 182vh;">
+            <div class="counter-label">★ YOU ARE VISITOR ★</div>
+            <div class="counter-display" id="counter">
+                <div class="counter-digit">0</div>
+                <div class="counter-digit">0</div>
+                <div class="counter-digit">4</div>
+                <div class="counter-digit">2</div>
+                <div class="counter-digit">0</div>
+                <div class="counter-digit">6</div>
+                <div class="counter-digit">9</div>
+            </div>
+        </div>
+
+        <!-- DANCING ELEMENTS -->
+        <div class="dancers" style="left: 140vw; top: 115vh;">
+            <span class="dancer">🕺</span>
+            <span class="dancer">👾</span>
+            <span class="dancer">💃</span>
+            <span class="dancer">🤖</span>
+            <span class="dancer">🕺</span>
+        </div>
+
+        <!-- WEIRD FLOATING OBJECTS -->
+        <div class="draggable weird-obj spinning" style="left: 108vw; top: 140vh; color: var(--hot-pink);">🛸</div>
+        <div class="draggable weird-obj pulsing" style="left: 192vw; top: 135vh; color: var(--electric-blue);">👽</div>
+        <div class="draggable weird-obj wobbling" style="left: 125vw; top: 142vh; color: var(--lime-green);">🔮</div>
+        <div class="draggable weird-obj spinning" style="left: 175vw; top: 155vh; color: var(--yellow);">⚡</div>
+        <div class="draggable weird-obj pulsing" style="left: 145vw; top: 112vh; color: var(--hot-orange);">🌙</div>
+        <div class="draggable weird-obj wobbling" style="left: 188vw; top: 188vh; color: var(--hot-pink);">🎭</div>
+        <div class="draggable weird-obj shaking" style="left: 112vw; top: 185vh; color: var(--electric-blue);">💀</div>
+        <div class="draggable weird-obj spinning" style="left: 160vw; top: 108vh; color: var(--lime-green);">🛰️</div>
+        <div class="draggable weird-obj" style="left: 105vw; top: 118vh; font-size: 6rem; color: var(--yellow);">🚀</div>
+        <div class="draggable weird-obj" style="left: 195vw; top: 195vh; font-size: 6rem; color: var(--hot-pink);">🕳️</div>
+        <div class="draggable weird-obj pulsing" style="left: 150vw; top: 130vh; font-size: 5rem; color: var(--electric-blue);">👁️</div>
+
+        <!-- SECRET ZONES -->
+        <div class="secret-zone" style="left: 102vw; top: 150vh;" data-secret="1">🗝️</div>
+        <div class="secret-zone" style="left: 198vw; top: 150vh;" data-secret="2">💎</div>
+        <div class="secret-zone" style="left: 150vw; top: 102vh;" data-secret="3">⭐</div>
+        <div class="secret-zone" style="left: 150vw; top: 198vh;" data-secret="4">🌟</div>
+        <div class="secret-zone" style="left: 110vw; top: 110vh;" data-secret="5">🔑</div>
+        <div class="secret-zone" style="left: 190vw; top: 110vh;" data-secret="6">💫</div>
+        <div class="secret-zone" style="left: 110vw; top: 190vh;" data-secret="7">✨</div>
+        <div class="secret-zone" style="left: 190vw; top: 190vh;" data-secret="8">🎪</div>
+
+    </div>
+
+    <script>
+        const playground = document.getElementById('playground');
+        const cursor = document.getElementById('cursor');
+        const glitch = document.getElementById('glitch');
+        const coordX = document.getElementById('coordX');
+        const coordY = document.getElementById('coordY');
+        const mapView = document.getElementById('mapView');
+        const foundEl = document.getElementById('found');
+        const mainEntity = document.getElementById('mainEntity');
+
+        let isPanning = false;
+        let isDragging = false;
+        let startX, startY, scrollLeft, scrollTop;
+        let draggedEl = null;
+        let found = new Set();
+
+        // Cursor
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX - 15 + 'px';
+            cursor.style.top = e.clientY - 15 + 'px';
+
+            // Coords
+            const rect = playground.getBoundingClientRect();
+            coordX.textContent = Math.round(-rect.left + e.clientX);
+            coordY.textContent = Math.round(-rect.top + e.clientY);
+
+            // Trail
+            if (Math.random() > 0.7) createTrail(e.clientX, e.clientY);
+
+            updateMinimap();
+            checkSecrets(e);
+        });
+
+        // Trail
+        function createTrail(x, y) {
+            const t = document.createElement('div');
+            t.className = 'trail';
+            t.style.left = x + 'px';
+            t.style.top = y + 'px';
+            const colors = ['var(--hot-pink)', 'var(--electric-blue)', 'var(--lime-green)', 'var(--yellow)'];
+            t.style.background = colors[Math.floor(Math.random() * colors.length)];
+            document.body.appendChild(t);
+
+            t.animate([
+                { opacity: 0.8, transform: 'scale(1) rotate(0deg)' },
+                { opacity: 0, transform: 'scale(0) rotate(180deg)' }
+            ], { duration: 600, easing: 'ease-out' });
+
+            setTimeout(() => t.remove(), 600);
+        }
+
+        // Click effects
+        document.addEventListener('click', (e) => {
+            cursor.classList.add('clicked');
+            setTimeout(() => cursor.classList.remove('clicked'), 200);
+
+            // Particle burst
+            const particles = ['✦', '★', '✧', '⚡', '💥', '✨'];
+            for (let i = 0; i < 6; i++) {
+                const p = document.createElement('div');
+                p.className = 'click-particle';
+                p.textContent = particles[Math.floor(Math.random() * particles.length)];
+                p.style.left = e.clientX + 'px';
+                p.style.top = e.clientY + 'px';
+                document.body.appendChild(p);
+
+                const angle = (i / 6) * Math.PI * 2;
+                const dist = 60 + Math.random() * 40;
+
+                p.animate([
+                    { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
+                    { transform: `translate(calc(-50% + ${Math.cos(angle) * dist}px), calc(-50% + ${Math.sin(angle) * dist}px)) scale(0)`, opacity: 0 }
+                ], { duration: 500, easing: 'ease-out' });
+
+                setTimeout(() => p.remove(), 500);
+            }
+
+            // Random glitch
+            if (Math.random() > 0.8) {
+                glitch.classList.add('active');
+                setTimeout(() => glitch.classList.remove('active'), 150);
+            }
+        });
+
+        // Panning
+        playground.addEventListener('mousedown', (e) => {
+            if (e.target === playground || e.target.classList.contains('grid') || 
+                getComputedStyle(e.target).pointerEvents === 'none') {
+                isPanning = true;
+                startX = e.pageX;
+                startY = e.pageY;
+                scrollLeft = parseFloat(playground.style.left) || -window.innerWidth;
+                scrollTop = parseFloat(playground.style.top) || -window.innerHeight;
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            isPanning = false;
+            isDragging = false;
+            if (draggedEl) {
+                draggedEl.classList.remove('dragging');
+                draggedEl = null;
+            }
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (isPanning) {
+                let newLeft = scrollLeft + (e.pageX - startX);
+                let newTop = scrollTop + (e.pageY - startY);
+                newLeft = Math.min(0, Math.max(newLeft, window.innerWidth - playground.offsetWidth));
+                newTop = Math.min(0, Math.max(newTop, window.innerHeight - playground.offsetHeight));
+                playground.style.left = newLeft + 'px';
+                playground.style.top = newTop + 'px';
+            }
+
+            if (isDragging && draggedEl) {
+                const rect = playground.getBoundingClientRect();
+                draggedEl.style.left = (e.clientX - rect.left - draggedEl.offsetWidth / 2) + 'px';
+                draggedEl.style.top = (e.clientY - rect.top - draggedEl.offsetHeight / 2) + 'px';
+            }
+        });
+
+        // Draggables
+        document.querySelectorAll('.draggable:not(.portal)').forEach(el => {
+            el.addEventListener('mousedown', (e) => {
+                e.stopPropagation();
+                isDragging = true;
+                draggedEl = el;
+                el.classList.add('dragging');
+            });
+        });
+
+        // Portal clicks
+        document.querySelectorAll('.portal').forEach(p => {
+            p.addEventListener('click', (e) => {
+                e.preventDefault();
+                const dest = p.dataset.nav;
+                document.body.style.transition = 'filter 0.2s';
+                document.body.style.filter = 'brightness(3) saturate(0)';
+                setTimeout(() => {
+                    document.body.style.filter = 'none';
+                    alert(`ENTERING: ${dest.toUpperCase()}\n\n[This would navigate to the ${dest} section]`);
+                }, 200);
+            });
+        });
+
+        // Main entity click
+        mainEntity.addEventListener('click', () => {
+            document.body.style.transition = 'filter 0.3s';
+            document.body.style.filter = 'hue-rotate(180deg) brightness(1.5)';
+            setTimeout(() => {
+                document.body.style.filter = 'none';
+            }, 300);
+        });
+
+        // Minimap
+        function updateMinimap() {
+            const rect = playground.getBoundingClientRect();
+            const vw = (window.innerWidth / playground.offsetWidth) * 130;
+            const vh = (window.innerHeight / playground.offsetHeight) * 130;
+            const vl = (-rect.left / playground.offsetWidth) * 130;
+            const vt = (-rect.top / playground.offsetHeight) * 130;
+            mapView.style.width = vw + 'px';
+            mapView.style.height = vh + 'px';
+            mapView.style.left = vl + 'px';
+            mapView.style.top = vt + 'px';
+        }
+
+        // Secrets
+        function checkSecrets(e) {
+            document.querySelectorAll('.secret-zone:not(.revealed)').forEach(s => {
+                const rect = s.getBoundingClientRect();
+                const dist = Math.hypot(e.clientX - rect.left - 50, e.clientY - rect.top - 50);
+                if (dist < 120) {
+                    s.classList.add('revealed');
+                    found.add(s.dataset.secret);
+                    foundEl.textContent = found.size;
+                }
+            });
+        }
+
+        // Counter increment
+        setInterval(() => {
+            const digits = document.querySelectorAll('.counter-digit');
+            let num = parseInt(Array.from(digits).map(d => d.textContent).join(''));
+            num += Math.floor(Math.random() * 10);
+            const str = num.toString().padStart(7, '0');
+            digits.forEach((d, i) => d.textContent = str[i]);
+        }, 2000);
+
+        // Keyboard
+        document.addEventListener('keydown', (e) => {
+            const sp = 80;
+            let l = parseFloat(playground.style.left) || -window.innerWidth;
+            let t = parseFloat(playground.style.top) || -window.innerHeight;
+
+            if (['ArrowUp', 'w', 'W'].includes(e.key)) t += sp;
+            else if (['ArrowDown', 's', 'S'].includes(e.key)) t -= sp;
+            else if (['ArrowLeft', 'a', 'A'].includes(e.key)) l += sp;
+            else if (['ArrowRight', 'd', 'D'].includes(e.key)) l -= sp;
+            else return;
+
+            l = Math.min(0, Math.max(l, window.innerWidth - playground.offsetWidth));
+            t = Math.min(0, Math.max(t, window.innerHeight - playground.offsetHeight));
+            playground.style.left = l + 'px';
+            playground.style.top = t + 'px';
+            updateMinimap();
+        });
+
+        // 3D DMT WORMHOLE TUNNEL - WebGL Shader
+        const canvas = document.getElementById('wormholeCanvas');
+        const gl = canvas.getContext('webgl');
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            gl.viewport(0, 0, canvas.width, canvas.height);
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Vertex shader
+        const vertexShaderSource = `
+            attribute vec2 position;
+            void main() {
+                gl_Position = vec4(position, 0.0, 1.0);
+            }
+        `;
+
+        // Fragment shader - DMT Tunnel
+        const fragmentShaderSource = `
+            precision highp float;
+            uniform float time;
+            uniform vec2 resolution;
+            
+            #define PI 3.14159265359
+            
+            // Neon colors
+            vec3 neonPink = vec3(1.0, 0.0, 0.6);
+            vec3 neonCyan = vec3(0.0, 1.0, 1.0);
+            vec3 neonPurple = vec3(0.6, 0.0, 1.0);
+            vec3 neonGreen = vec3(0.2, 1.0, 0.0);
+            
+            void main() {
+                vec2 uv = (gl_FragCoord.xy - 0.5 * resolution.xy) / min(resolution.x, resolution.y);
+                
+                // Convert to polar coordinates
+                float angle = atan(uv.y, uv.x);
+                float radius = length(uv);
+                
+                // Tunnel depth effect
+                float tunnel = 0.5 / radius;
+                
+                // Moving through tunnel
+                float z = tunnel + time * 0.8;
+                
+                // Hexagonal/geometric pattern
+                float segments = 8.0;
+                float segmentAngle = floor(angle * segments / PI + 0.5) * PI / segments;
+                
+                // Create geometric rings
+                float rings = sin(z * 8.0) * 0.5 + 0.5;
+                float geo = sin(angle * 6.0 + z * 2.0) * 0.5 + 0.5;
+                
+                // Sacred geometry overlay
+                float hex = abs(sin(angle * 3.0 + time)) * abs(sin(z * 4.0));
+                float tri = abs(sin(angle * 6.0 - time * 0.5)) * abs(sin(z * 6.0));
+                
+                // Grid lines
+                float gridA = smoothstep(0.02, 0.0, abs(sin(angle * 8.0)));
+                float gridR = smoothstep(0.03, 0.0, abs(sin(z * 10.0)));
+                float grid = max(gridA, gridR) * (1.0 - radius * 0.5);
+                
+                // Color mixing based on depth and angle
+                vec3 col1 = mix(neonPink, neonCyan, sin(z * 2.0 + time) * 0.5 + 0.5);
+                vec3 col2 = mix(neonPurple, neonGreen, cos(z * 1.5 - time * 0.5) * 0.5 + 0.5);
+                vec3 color = mix(col1, col2, geo);
+                
+                // Add geometric patterns
+                color += neonCyan * hex * 0.3;
+                color += neonPink * tri * 0.2;
+                color += vec3(1.0) * grid * 0.5;
+                
+                // Rings intensity
+                color *= rings * 0.5 + 0.5;
+                
+                // Vignette / depth fade
+                float vignette = 1.0 - radius * 0.8;
+                color *= vignette;
+                
+                // Center glow
+                float centerGlow = exp(-radius * 3.0) * 0.3;
+                color += vec3(1.0, 0.5, 1.0) * centerGlow;
+                
+                // Outer darkness
+                color *= smoothstep(2.0, 0.3, radius);
+                
+                // Add some noise/grain
+                float noise = fract(sin(dot(uv + time, vec2(12.9898, 78.233))) * 43758.5453);
+                color += noise * 0.03;
+                
+                gl_FragColor = vec4(color, 1.0);
+            }
+        `;
+
+        // Compile shader
+        function compileShader(source, type) {
+            const shader = gl.createShader(type);
+            gl.shaderSource(shader, source);
+            gl.compileShader(shader);
+            if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+                console.error(gl.getShaderInfoLog(shader));
+                return null;
+            }
+            return shader;
+        }
+
+        const vertexShader = compileShader(vertexShaderSource, gl.VERTEX_SHADER);
+        const fragmentShader = compileShader(fragmentShaderSource, gl.FRAGMENT_SHADER);
+
+        // Create program
+        const program = gl.createProgram();
+        gl.attachShader(program, vertexShader);
+        gl.attachShader(program, fragmentShader);
+        gl.linkProgram(program);
+        gl.useProgram(program);
+
+        // Create quad
+        const vertices = new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]);
+        const buffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+        gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+
+        const position = gl.getAttribLocation(program, 'position');
+        gl.enableVertexAttribArray(position);
+        gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
+
+        // Uniforms
+        const timeLocation = gl.getUniformLocation(program, 'time');
+        const resolutionLocation = gl.getUniformLocation(program, 'resolution');
+
+        // Animation loop
+        function render(time) {
+            gl.uniform1f(timeLocation, time * 0.001);
+            gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+            requestAnimationFrame(render);
+        }
+        requestAnimationFrame(render);
+
+        // Init
+        window.addEventListener('load', () => {
+            playground.style.left = -window.innerWidth + 'px';
+            playground.style.top = -window.innerHeight + 'px';
+            updateMinimap();
+        });
+    </script>
+</body>
+</html>
