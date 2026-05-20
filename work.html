@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>$ WORK.LOG $ PROJECTS / EVAN HAWKINS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee+Inline&family=VT323&family=Silkscreen:wght@400;700&family=JetBrains+Mono:wght@400;700&family=Major+Mono+Display&family=Bangers&display=swap" rel="stylesheet">
+<style>
+:root {
+    --hot-pink: #ff2d92;
+    --electric-blue: #00f0ff;
+    --lime-green: #39ff14;
+    --yellow: #ffff00;
+    --hot-orange: #ff6b35;
+    --void: #000;
+    --terminal-bg: #050a08;
+    --terminal-border: #1a3326;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+    background: var(--void);
+    color: var(--lime-green);
+    font-family: 'JetBrains Mono', 'VT323', monospace;
+    font-size: 15px;
+    line-height: 1.6;
+    cursor: url('catgirl-cursor.png'), auto;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+a, button, .clickable { cursor: url('catgirl-cursor.png'), pointer; }
+
+/* Matrix-style background */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+        repeating-linear-gradient(0deg, transparent 0, transparent 1px, rgba(57, 255, 20, 0.03) 2px, transparent 3px),
+        radial-gradient(ellipse at top, rgba(57, 255, 20, 0.15), transparent 60%),
+        radial-gradient(ellipse at bottom right, rgba(0, 240, 255, 0.1), transparent 60%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(57, 255, 20, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(57, 255, 20, 0.04) 1px, transparent 1px);
+    background-size: 30px 30px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Falling code background animation */
+.matrix-rain {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.15;
+}
+
+.matrix-col {
+    position: absolute;
+    top: -100px;
+    font-family: 'VT323', monospace;
+    font-size: 18px;
+    color: var(--lime-green);
+    text-shadow: 0 0 5px var(--lime-green);
+    animation: matrixFall linear infinite;
+    white-space: pre-line;
+    line-height: 1.1;
+}
+
+@keyframes matrixFall {
+    to { transform: translateY(120vh); }
+}
+
+/* Home link */
+.home-link {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--lime-green);
+    text-decoration: none;
+    padding: 10px 18px;
+    border: 1px solid var(--lime-green);
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    text-shadow: 0 0 8px var(--lime-green);
+    box-shadow: 0 0 15px rgba(57, 255, 20, 0.3);
+    letter-spacing: 1px;
+}
+
+.home-link:hover {
+    background: var(--lime-green);
+    color: black;
+    text-shadow: none;
+    box-shadow: 0 0 30px var(--lime-green);
+    transform: translateX(-3px);
+}
+
+/* Container */
+.container {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 80px 20px 60px;
+    position: relative;
+    z-index: 10;
+}
+
+/* Terminal header */
+.terminal-header {
+    background: var(--terminal-bg);
+    border: 1px solid var(--terminal-border);
+    border-radius: 4px;
+    padding: 12px 18px;
+    margin-bottom: 30px;
+    box-shadow: 0 0 30px rgba(57, 255, 20, 0.15), inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.terminal-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+    border-bottom: 1px dashed var(--terminal-border);
+}
+
+.terminal-dots { display: flex; gap: 6px; }
+.terminal-dots span { width: 10px; height: 10px; border-radius: 50%; }
+.terminal-dots span:nth-child(1) { background: #ff5555; }
+.terminal-dots span:nth-child(2) { background: var(--yellow); }
+.terminal-dots span:nth-child(3) { background: var(--lime-green); }
+
+.terminal-path {
+    color: var(--electric-blue);
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.terminal-line {
+    margin: 4px 0;
+    opacity: 0;
+    animation: typeIn 0.4s forwards;
+}
+
+.terminal-line:nth-child(2) { animation-delay: 0.1s; }
+.terminal-line:nth-child(3) { animation-delay: 0.3s; }
+.terminal-line:nth-child(4) { animation-delay: 0.5s; }
+.terminal-line:nth-child(5) { animation-delay: 0.7s; }
+
+@keyframes typeIn { to { opacity: 1; } }
+
+.prompt { color: var(--hot-pink); margin-right: 8px; }
+.cmd { color: var(--lime-green); }
+.output { color: rgba(57, 255, 20, 0.7); display: block; margin-left: 20px; }
+.value { color: var(--yellow); }
+.cursor-blink::after { content: '█'; animation: blink 1s steps(2) infinite; color: var(--lime-green); }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* Page title */
+.page-title-wrap {
+    text-align: center;
+    margin: 40px 0 50px;
+}
+
+.page-title {
+    font-family: 'Bungee Inline', cursive;
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    color: var(--lime-green);
+    text-shadow: 0 0 30px var(--lime-green), 0 0 60px var(--electric-blue);
+    letter-spacing: 6px;
+    animation: titleGlow 3s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+    0%, 100% { text-shadow: 0 0 30px var(--lime-green), 0 0 60px var(--electric-blue); }
+    50% { text-shadow: 0 0 50px var(--lime-green), 0 0 80px var(--hot-pink); }
+}
+
+.page-subtitle {
+    font-family: 'Major Mono Display', monospace;
+    color: var(--electric-blue);
+    font-size: 1rem;
+    letter-spacing: 4px;
+    margin-top: 10px;
+    opacity: 0.8;
+}
+
+/* Project cards */
+.project {
+    background: var(--terminal-bg);
+    border: 1px solid var(--terminal-border);
+    border-radius: 6px;
+    margin-bottom: 30px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 0 rgba(57, 255, 20, 0);
+    position: relative;
+}
+
+.project::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--lime-green);
+    box-shadow: 0 0 15px var(--lime-green);
+    transition: all 0.3s ease;
+}
+
+.project:hover {
+    border-color: var(--lime-green);
+    box-shadow: 0 0 40px rgba(57, 255, 20, 0.3);
+    transform: translateY(-2px);
+}
+
+.project:hover::before { width: 6px; }
+
+.project.timechain::before { background: #f7931a; box-shadow: 0 0 15px #f7931a; }
+.project.localeksi::before { background: var(--electric-blue); box-shadow: 0 0 15px var(--electric-blue); }
+.project.trinity::before { background: var(--yellow); box-shadow: 0 0 15px var(--yellow); }
+.project.signal::before { background: var(--hot-pink); box-shadow: 0 0 15px var(--hot-pink); }
+.project.oracle::before { background: #d40000; box-shadow: 0 0 15px #d40000; }
+
+.project-header {
+    padding: 20px 25px;
+    background: linear-gradient(90deg, rgba(57, 255, 20, 0.08), transparent);
+    border-bottom: 1px solid var(--terminal-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.project-name {
+    font-family: 'Bungee Inline', cursive;
+    font-size: 1.6rem;
+    color: var(--lime-green);
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px currentColor;
+}
+
+.project.timechain .project-name { color: #f7931a; }
+.project.localeksi .project-name { color: var(--electric-blue); }
+.project.trinity .project-name { color: var(--yellow); }
+.project.signal .project-name { color: var(--hot-pink); }
+.project.oracle .project-name { color: #ffb000; }
+
+.status-badge {
+    font-family: 'Silkscreen', monospace;
+    font-size: 10px;
+    padding: 5px 12px;
+    border-radius: 12px;
+    letter-spacing: 2px;
+    border: 1px solid;
+}
+
+.status-building {
+    color: var(--yellow);
+    border-color: var(--yellow);
+    background: rgba(255, 255, 0, 0.1);
+    box-shadow: 0 0 10px rgba(255, 255, 0, 0.3);
+}
+
+.status-online {
+    color: var(--lime-green);
+    border-color: var(--lime-green);
+    background: rgba(57, 255, 20, 0.1);
+    box-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.status-recon {
+    color: var(--electric-blue);
+    border-color: var(--electric-blue);
+    background: rgba(0, 240, 255, 0.1);
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+}
+
+.status-archived {
+    color: rgba(57, 255, 20, 0.4);
+    border-color: rgba(57, 255, 20, 0.4);
+}
+
+@keyframes pulse { 50% { box-shadow: 0 0 20px rgba(57, 255, 20, 0.6); } }
+
+.project-body {
+    padding: 22px 25px;
+}
+
+.project-desc {
+    font-family: 'VT323', monospace;
+    font-size: 18px;
+    color: rgba(57, 255, 20, 0.95);
+    line-height: 1.5;
+    margin-bottom: 18px;
+}
+
+.project-desc em {
+    color: var(--yellow);
+    font-style: normal;
+    text-shadow: 0 0 8px var(--yellow);
+}
+
+.project-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+    margin-bottom: 18px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px dashed var(--terminal-border);
+    border-radius: 4px;
+}
+
+.meta-item {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+}
+
+.meta-key {
+    color: rgba(0, 240, 255, 0.8);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.meta-val { color: var(--lime-green); }
+
+.tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.tag {
+    font-family: 'Silkscreen', monospace;
+    font-size: 10px;
+    padding: 4px 10px;
+    background: rgba(0, 240, 255, 0.08);
+    border: 1px solid rgba(0, 240, 255, 0.4);
+    color: var(--electric-blue);
+    letter-spacing: 1px;
+    transition: all 0.2s;
+}
+
+.tag:hover {
+    background: var(--electric-blue);
+    color: black;
+    box-shadow: 0 0 15px var(--electric-blue);
+}
+
+.project-link {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--lime-green);
+    text-decoration: none;
+    padding: 8px 18px;
+    border: 1px solid var(--lime-green);
+    transition: all 0.3s;
+    margin-right: 10px;
+    margin-top: 8px;
+    letter-spacing: 1px;
+}
+
+.project-link::before { content: '> '; }
+
+.project-link:hover {
+    background: var(--lime-green);
+    color: black;
+    text-shadow: none;
+    box-shadow: 0 0 20px var(--lime-green);
+    transform: translateY(-2px);
+}
+
+/* Footer */
+.work-footer {
+    text-align: center;
+    margin-top: 50px;
+    padding: 25px;
+    border-top: 1px dashed var(--terminal-border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: rgba(57, 255, 20, 0.5);
+    letter-spacing: 2px;
+}
+
+.work-footer .accent { color: var(--hot-pink); }
+
+/* Trail */
+.trail {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    pointer-events: none;
+    z-index: 99999;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+@media (max-width: 600px) {
+    .container { padding: 70px 12px 40px; }
+    .page-title { font-size: 2.2rem; letter-spacing: 3px; }
+    .project-name { font-size: 1.2rem; }
+    .terminal-header { padding: 10px 14px; font-size: 13px; }
+}
+</style>
+</head>
+<body>
+
+<a href="index.html" class="home-link">← BACK TO VOID</a>
+
+<div class="matrix-rain" id="matrixRain"></div>
+
+<div class="container">
+
+    <div class="terminal-header">
+        <div class="terminal-bar">
+            <div class="terminal-dots"><span></span><span></span><span></span></div>
+            <div class="terminal-path">~/evan/work.log</div>
+        </div>
+        <div class="terminal-line"><span class="prompt">$</span><span class="cmd">ls -la projects/</span></div>
+        <div class="terminal-line"><span class="output">total <span class="value">5</span> active deployments</span></div>
+        <div class="terminal-line"><span class="output">scanning for active processes...</span></div>
+        <div class="terminal-line"><span class="prompt">$</span><span class="cmd">cat README.md</span><span class="cursor-blink"></span></div>
+    </div>
+
+    <div class="page-title-wrap">
+        <h1 class="page-title">PROJECT REGISTRY</h1>
+        <div class="page-subtitle">// active. building. shipping.</div>
+    </div>
+
+    <!-- TIMECHAIN TECHNOLOGIES -->
+    <div class="project timechain">
+        <div class="project-header">
+            <div class="project-name">⛓ TIMECHAIN TECHNOLOGIES</div>
+            <div class="status-badge status-building">▸ BUILDING</div>
+        </div>
+        <div class="project-body">
+            <p class="project-desc">
+                blockchain & infrastructure shop operating in the <em>federal contracting space</em>.
+                making decentralized infra <em>legible to decision-makers</em>. pre-revenue, intentional, slow-cooking the right way.
+                the founding bet of my next decade.
+            </p>
+            <div class="project-meta">
+                <div class="meta-item"><div class="meta-key">role</div><div class="meta-val">founder</div></div>
+                <div class="meta-item"><div class="meta-key">sector</div><div class="meta-val">federal / blockchain</div></div>
+                <div class="meta-item"><div class="meta-key">phase</div><div class="meta-val">pre-revenue</div></div>
+                <div class="meta-item"><div class="meta-key">domain</div><div class="meta-val">timechaintech.com</div></div>
+            </div>
+            <div class="tech-stack">
+                <span class="tag">BITCOIN</span>
+                <span class="tag">L2</span>
+                <span class="tag">FEDERAL</span>
+                <span class="tag">INFRASTRUCTURE</span>
+                <span class="tag">CONSULTING</span>
+            </div>
+            <a class="project-link" href="contact.html">INQUIRE</a>
+        </div>
+    </div>
+
+    <!-- LOCALEKSI -->
+    <div class="project localeksi">
+        <div class="project-header">
+            <div class="project-name">▣ LOCALEKSI</div>
+            <div class="status-badge status-online">● ONLINE</div>
+        </div>
+        <div class="project-body">
+            <p class="project-desc">
+                a quietly hideous <em>multi-GPU inference workstation</em> humming in a corner.
+                Threadripper Pro, 128GB RAM, three 3090s and a 4090 doing tensor parallel magic.
+                Qwen3.6-27B INT4 + TurboQuant + MTP getting <em>37–51 tokens/sec on real ClawdHawk traffic</em>.
+                local intelligence, no leash.
+            </p>
+            <div class="project-meta">
+                <div class="meta-item"><div class="meta-key">cpu</div><div class="meta-val">Threadripper Pro 3955WX</div></div>
+                <div class="meta-item"><div class="meta-key">gpu</div><div class="meta-val">2× 3090 Ti · 4090 · 3090</div></div>
+                <div class="meta-item"><div class="meta-key">ram</div><div class="meta-val">128GB ECC</div></div>
+                <div class="meta-item"><div class="meta-key">stack</div><div class="meta-val">vLLM · Docker · Ubuntu</div></div>
+                <div class="meta-item"><div class="meta-key">model</div><div class="meta-val">Qwen3.6-27B INT4</div></div>
+                <div class="meta-item"><div class="meta-key">throughput</div><div class="meta-val">~50 t/s · 110K ctx</div></div>
+            </div>
+            <div class="tech-stack">
+                <span class="tag">CUDA</span>
+                <span class="tag">vLLM</span>
+                <span class="tag">DOCKER</span>
+                <span class="tag">TURBOQUANT</span>
+                <span class="tag">MTP</span>
+                <span class="tag">PYTHON</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- TRADING TRINITY -->
+    <div class="project trinity">
+        <div class="project-header">
+            <div class="project-name">△ TRADING TRINITY</div>
+            <div class="status-badge status-online">● ONLINE</div>
+        </div>
+        <div class="project-body">
+            <p class="project-desc">
+                multi-timeframe technical analysis platform built around three agents:
+                <em>Weekly Strategist</em>, <em>Daily Tactician</em>, and <em>4H Sniper</em>.
+                Bulkowski-grounded chart pattern detection with confidence scoring and measured-move targets.
+                markets are slow oracles. this is the listening device.
+            </p>
+            <div class="project-meta">
+                <div class="meta-item"><div class="meta-key">runtime</div><div class="meta-val">Unraid</div></div>
+                <div class="meta-item"><div class="meta-key">patterns</div><div class="meta-val">top 10 by success rate</div></div>
+                <div class="meta-item"><div class="meta-key">timeframes</div><div class="meta-val">1W / 1D / 4H</div></div>
+                <div class="meta-item"><div class="meta-key">status</div><div class="meta-val">v2 · iterating</div></div>
+            </div>
+            <div class="tech-stack">
+                <span class="tag">PYTHON</span>
+                <span class="tag">BULKOWSKI</span>
+                <span class="tag">PATTERNS</span>
+                <span class="tag">MULTI-AGENT</span>
+                <span class="tag">UNRAID</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIGNAL DECK -->
+    <div class="project signal">
+        <div class="project-header">
+            <div class="project-name">📡 SIGNAL DECK</div>
+            <div class="status-badge status-recon">⟳ RECON</div>
+        </div>
+        <div class="project-body">
+            <p class="project-desc">
+                Twitter/X <em>alpha aggregator</em> for the meme-coin underworld.
+                signal vs noise in the most adversarial information market on earth.
+                weekend kind of project. degenerate kind of useful.
+            </p>
+            <div class="project-meta">
+                <div class="meta-item"><div class="meta-key">chain</div><div class="meta-val">Solana focus</div></div>
+                <div class="meta-item"><div class="meta-key">source</div><div class="meta-val">X / Twitter API</div></div>
+                <div class="meta-item"><div class="meta-key">vibe</div><div class="meta-val">chaotic neutral</div></div>
+                <div class="meta-item"><div class="meta-key">status</div><div class="meta-val">prototype</div></div>
+            </div>
+            <div class="tech-stack">
+                <span class="tag">SOLANA</span>
+                <span class="tag">X API</span>
+                <span class="tag">ALPHA</span>
+                <span class="tag">DEGEN</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- POCKET ORACLE -->
+    <div class="project oracle">
+        <div class="project-header">
+            <div class="project-name">✠ POCKET ORACLE</div>
+            <div class="status-badge status-building">▸ BUILDING</div>
+        </div>
+        <div class="project-body">
+            <p class="project-desc">
+                <em>oraculum sacci</em>. a build codex for a local sovereign assistant —
+                a pocket-sized inference oracle for queries the cloud doesn't deserve to see.
+                part schematic, part grimoire. read the codex.
+            </p>
+            <div class="project-meta">
+                <div class="meta-item"><div class="meta-key">codex</div><div class="meta-val">v1 published</div></div>
+                <div class="meta-item"><div class="meta-key">form</div><div class="meta-val">pocket / portable</div></div>
+                <div class="meta-item"><div class="meta-key">domain</div><div class="meta-val">local-first AI</div></div>
+                <div class="meta-item"><div class="meta-key">status</div><div class="meta-val">build plan v1</div></div>
+            </div>
+            <div class="tech-stack">
+                <span class="tag">LOCAL-FIRST</span>
+                <span class="tag">SOVEREIGN</span>
+                <span class="tag">HARDWARE</span>
+                <span class="tag">CODEX</span>
+            </div>
+            <a class="project-link" href="pocket-oracle-buildplan-v1.html">OPEN CODEX</a>
+        </div>
+    </div>
+
+    <div class="work-footer">
+        // <span class="accent">more coming</span>. <br>
+        // built in the margins. shipped on weekends.<br><br>
+        █ END OF REGISTRY █
+    </div>
+
+</div>
+
+<script>
+// Matrix rain
+const matrixRain = document.getElementById('matrixRain');
+const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF₿✠△○◇';
+
+function spawnColumn() {
+    const col = document.createElement('div');
+    col.className = 'matrix-col';
+    col.style.left = Math.random() * 100 + '%';
+    col.style.animationDuration = (8 + Math.random() * 12) + 's';
+    col.style.fontSize = (14 + Math.random() * 10) + 'px';
+
+    let text = '';
+    const len = 15 + Math.floor(Math.random() * 20);
+    for (let i = 0; i < len; i++) {
+        text += chars[Math.floor(Math.random() * chars.length)] + '\n';
+    }
+    col.textContent = text;
+    matrixRain.appendChild(col);
+
+    setTimeout(() => col.remove(), 20000);
+}
+
+setInterval(spawnColumn, 600);
+for (let i = 0; i < 8; i++) setTimeout(spawnColumn, i * 200);
+
+// Trail
+document.addEventListener('mousemove', (e) => {
+    if (Math.random() > 0.75) {
+        const t = document.createElement('div');
+        t.className = 'trail';
+        t.style.left = (e.clientX - 4) + 'px';
+        t.style.top = (e.clientY - 4) + 'px';
+        const colors = ['#39ff14', '#00f0ff', '#ffff00', '#ff2d92'];
+        const c = colors[Math.floor(Math.random() * colors.length)];
+        t.style.background = c;
+        t.style.boxShadow = `0 0 10px ${c}, 0 0 20px ${c}`;
+        document.body.appendChild(t);
+        t.animate([
+            { opacity: 1, transform: 'scale(1) rotate(0deg)' },
+            { opacity: 0, transform: 'scale(0.2) rotate(360deg)' }
+        ], { duration: 500, easing: 'ease-out' });
+        setTimeout(() => t.remove(), 500);
+    }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>✠ ENTITY DOSSIER ✠ EVAN HAWKINS ✠</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee+Inline&family=VT323&family=Silkscreen:wght@400;700&family=Permanent+Marker&family=Bangers&family=Cinzel+Decorative:wght@700;900&family=Major+Mono+Display&display=swap" rel="stylesheet">
+<style>
+:root {
+    --hot-pink: #ff2d92;
+    --electric-blue: #00f0ff;
+    --lime-green: #39ff14;
+    --yellow: #ffff00;
+    --hot-orange: #ff6b35;
+    --void: #000;
+    --gold: #ffb000;
+    --crimson: #d40000;
+    --bone: #fff8e7;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+    background: var(--void);
+    color: var(--bone);
+    font-family: 'VT323', monospace;
+    font-size: 18px;
+    line-height: 1.5;
+    cursor: url('catgirl-cursor.png'), auto;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+a, button, .clickable { cursor: url('catgirl-cursor.png'), pointer; }
+
+/* Background grid + scanlines */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+        repeating-linear-gradient(0deg, transparent 0, transparent 2px, rgba(255, 45, 146, 0.04) 3px, transparent 4px),
+        radial-gradient(ellipse at top, rgba(255, 45, 146, 0.15), transparent 60%),
+        radial-gradient(ellipse at bottom, rgba(0, 240, 255, 0.12), transparent 60%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(57, 255, 20, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(57, 255, 20, 0.06) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Home link */
+.home-link {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    font-family: 'Bangers', cursive;
+    font-size: 1rem;
+    color: var(--electric-blue);
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 2px solid var(--electric-blue);
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    text-shadow: 0 0 10px var(--electric-blue);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+    letter-spacing: 2px;
+}
+
+.home-link:hover {
+    background: var(--electric-blue);
+    color: black;
+    text-shadow: none;
+    box-shadow: 0 0 40px rgba(0, 240, 255, 0.8);
+    transform: translateX(-3px);
+}
+
+/* Container */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 80px 20px 60px;
+    position: relative;
+    z-index: 10;
+}
+
+/* Terminal boot */
+.boot-sequence {
+    font-family: 'Major Mono Display', monospace;
+    font-size: 11px;
+    color: var(--lime-green);
+    border: 1px solid rgba(57, 255, 20, 0.4);
+    background: rgba(0, 0, 0, 0.8);
+    padding: 12px 16px;
+    margin-bottom: 30px;
+    text-shadow: 0 0 5px var(--lime-green);
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.boot-line { display: block; opacity: 0; animation: bootIn 0.4s forwards; }
+.boot-line:nth-child(1) { animation-delay: 0.1s; }
+.boot-line:nth-child(2) { animation-delay: 0.3s; }
+.boot-line:nth-child(3) { animation-delay: 0.5s; }
+.boot-line:nth-child(4) { animation-delay: 0.7s; }
+.boot-line:nth-child(5) { animation-delay: 0.9s; color: var(--yellow); }
+
+@keyframes bootIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+
+/* Main title */
+.dossier-header {
+    text-align: center;
+    margin-bottom: 50px;
+    position: relative;
+}
+
+.sigil {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 2rem;
+    color: var(--crimson);
+    text-shadow: 0 0 20px var(--crimson), 0 0 40px var(--gold);
+    letter-spacing: 8px;
+    margin-bottom: 15px;
+}
+
+.dossier-title {
+    font-family: 'Bungee Inline', cursive;
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    background: linear-gradient(90deg, var(--hot-pink), var(--electric-blue), var(--lime-green), var(--hot-pink));
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradientFlow 4s linear infinite;
+    text-shadow: 0 0 30px rgba(255, 45, 146, 0.5);
+    letter-spacing: 4px;
+    margin-bottom: 10px;
+}
+
+@keyframes gradientFlow { 0% { background-position: 0% 50%; } 100% { background-position: 300% 50%; } }
+
+.dossier-subtitle {
+    font-family: 'Permanent Marker', cursive;
+    color: var(--yellow);
+    font-size: 1.5rem;
+    text-shadow: 2px 2px 0 var(--crimson), 0 0 20px var(--yellow);
+    transform: rotate(-2deg);
+    display: inline-block;
+}
+
+/* Glitch text */
+.glitch {
+    position: relative;
+    display: inline-block;
+}
+
+.glitch::before, .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glitch::before { color: var(--hot-pink); animation: glitch1 3s infinite; clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%); }
+.glitch::after { color: var(--electric-blue); animation: glitch2 3s infinite; clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%); }
+
+@keyframes glitch1 { 0%, 90%, 100% { transform: translate(0); } 92% { transform: translate(-2px, 2px); } 94% { transform: translate(2px, -2px); } }
+@keyframes glitch2 { 0%, 88%, 100% { transform: translate(0); } 89% { transform: translate(2px, -2px); } 91% { transform: translate(-2px, 2px); } }
+
+/* Stat cards - polaroid scrapbook style */
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+    margin: 40px 0;
+}
+
+.stat-card {
+    background: var(--bone);
+    color: black;
+    padding: 20px 18px 30px;
+    box-shadow: 5px 5px 0 rgba(0,0,0,0.5), 0 0 30px rgba(255, 45, 146, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.stat-card:nth-child(odd) { transform: rotate(-2deg); }
+.stat-card:nth-child(even) { transform: rotate(2deg); }
+.stat-card:nth-child(3n) { transform: rotate(-1deg); }
+
+.stat-card:hover {
+    transform: rotate(0deg) scale(1.05);
+    z-index: 5;
+    box-shadow: 8px 8px 0 var(--hot-pink), 0 0 60px var(--electric-blue);
+}
+
+.stat-card::before {
+    content: '📌';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5));
+}
+
+.stat-label {
+    font-family: 'Silkscreen', monospace;
+    font-size: 11px;
+    color: var(--hot-pink);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    border-bottom: 2px dashed var(--hot-pink);
+    padding-bottom: 6px;
+}
+
+.stat-value {
+    font-family: 'Bangers', cursive;
+    font-size: 1.4rem;
+    color: black;
+    line-height: 1.2;
+    margin-bottom: 8px;
+}
+
+.stat-flavor {
+    font-family: 'VT323', monospace;
+    font-size: 14px;
+    color: #555;
+    font-style: italic;
+}
+
+/* Lore section */
+.lore-section {
+    margin: 60px 0;
+    padding: 30px;
+    border: 2px solid var(--hot-pink);
+    background: rgba(255, 45, 146, 0.05);
+    backdrop-filter: blur(5px);
+    position: relative;
+    box-shadow: 0 0 40px rgba(255, 45, 146, 0.3), inset 0 0 30px rgba(0, 240, 255, 0.1);
+}
+
+.lore-section::before {
+    content: '> EXTENDED.LORE.LOG';
+    position: absolute;
+    top: -12px;
+    left: 20px;
+    font-family: 'Silkscreen', monospace;
+    font-size: 12px;
+    color: var(--lime-green);
+    background: var(--void);
+    padding: 2px 10px;
+    border: 1px solid var(--lime-green);
+}
+
+.lore-paragraph {
+    font-family: 'VT323', monospace;
+    font-size: 20px;
+    line-height: 1.6;
+    color: var(--bone);
+    margin-bottom: 18px;
+}
+
+.lore-paragraph:last-child { margin-bottom: 0; }
+
+.lore-paragraph .highlight {
+    color: var(--yellow);
+    text-shadow: 0 0 10px var(--yellow);
+    font-weight: bold;
+}
+
+.lore-paragraph .crimson {
+    color: var(--hot-pink);
+    text-shadow: 0 0 10px var(--hot-pink);
+}
+
+.lore-paragraph .cyan {
+    color: var(--electric-blue);
+    text-shadow: 0 0 10px var(--electric-blue);
+}
+
+/* Power level bars */
+.power-section {
+    margin: 50px 0;
+}
+
+.section-title {
+    font-family: 'Bungee Inline', cursive;
+    font-size: 2rem;
+    color: var(--electric-blue);
+    text-shadow: 0 0 20px var(--electric-blue);
+    margin-bottom: 25px;
+    letter-spacing: 3px;
+    text-align: center;
+}
+
+.power-bar {
+    margin: 15px 0;
+    position: relative;
+}
+
+.power-label {
+    font-family: 'Silkscreen', monospace;
+    font-size: 12px;
+    color: var(--bone);
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.power-value {
+    color: var(--lime-green);
+    text-shadow: 0 0 5px var(--lime-green);
+}
+
+.power-track {
+    height: 14px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid var(--electric-blue);
+    position: relative;
+    overflow: hidden;
+}
+
+.power-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--hot-pink), var(--electric-blue), var(--lime-green));
+    box-shadow: 0 0 15px var(--electric-blue);
+    animation: fillGrow 1.5s ease-out forwards;
+    transform-origin: left;
+    transform: scaleX(0);
+}
+
+@keyframes fillGrow { to { transform: scaleX(1); } }
+
+/* Flow state list */
+.flow-states {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin: 30px 0;
+}
+
+.flow-item {
+    padding: 12px 16px;
+    background: rgba(0, 240, 255, 0.08);
+    border: 1px dashed var(--electric-blue);
+    font-family: 'VT323', monospace;
+    font-size: 18px;
+    color: var(--bone);
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.flow-item:hover {
+    background: var(--electric-blue);
+    color: black;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(0, 240, 255, 0.5);
+}
+
+.flow-icon { font-size: 1.4rem; margin-right: 8px; }
+
+/* Easter egg */
+.secret {
+    margin: 60px 0 20px;
+    padding: 25px;
+    text-align: center;
+    border-top: 1px dashed rgba(255, 176, 0, 0.3);
+    border-bottom: 1px dashed rgba(255, 176, 0, 0.3);
+}
+
+.secret-text {
+    font-family: 'Cinzel Decorative', serif;
+    font-style: italic;
+    color: var(--gold);
+    font-size: 1.2rem;
+    text-shadow: 0 0 15px var(--gold);
+    letter-spacing: 2px;
+}
+
+/* Footer */
+.dossier-footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px;
+    border-top: 2px solid var(--hot-pink);
+    font-family: 'Silkscreen', monospace;
+    font-size: 11px;
+    color: rgba(255, 248, 231, 0.5);
+    letter-spacing: 2px;
+}
+
+.dossier-footer .blink { animation: blink 1s steps(2) infinite; color: var(--lime-green); }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* Trail */
+.trail {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    pointer-events: none;
+    z-index: 99999;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+@media (max-width: 600px) {
+    .container { padding: 70px 15px 40px; }
+    .dossier-title { font-size: 2.5rem; letter-spacing: 2px; }
+    .sigil { font-size: 1.4rem; }
+}
+</style>
+</head>
+<body>
+
+<a href="index.html" class="home-link">← BACK TO VOID</a>
+
+<div class="container">
+
+    <div class="boot-sequence">
+        <span class="boot-line">> INITIALIZING ENTITY SCAN.....</span>
+        <span class="boot-line">> ACCESSING ARCHIVE NODE 0x4A5F</span>
+        <span class="boot-line">> DECRYPTING DOSSIER...... OK</span>
+        <span class="boot-line">> SUBJECT: EVAN HAWKINS</span>
+        <span class="boot-line">> CLEARANCE: PUBLIC ████████ </span>
+    </div>
+
+    <div class="dossier-header">
+        <div class="sigil">✠ ◊ ✠</div>
+        <h1 class="dossier-title glitch" data-text="ENTITY DOSSIER">ENTITY DOSSIER</h1>
+        <div class="dossier-subtitle">~ a brief inquiry into the signal ~</div>
+    </div>
+
+    <div class="stat-grid">
+        <div class="stat-card">
+            <div class="stat-label">DESIGNATION</div>
+            <div class="stat-value">EVAN HAWKINS</div>
+            <div class="stat-flavor">also known as the timekeeper, the chainsmith, the void surfer</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">CLASS</div>
+            <div class="stat-value">FOUNDER / BUILDER / OPERATOR</div>
+            <div class="stat-flavor">cross-domain synthesist, infrastructure type</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">FACTION</div>
+            <div class="stat-value">TIMECHAIN TECHNOLOGIES</div>
+            <div class="stat-flavor">blockchain · federal · decentralized infra</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">DOMAIN</div>
+            <div class="stat-value">AI · BTC · MARKETS · PHILOSOPHY</div>
+            <div class="stat-flavor">a rare and marketable combination™</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">ALIGNMENT</div>
+            <div class="stat-value">CHAOTIC SOVEREIGN</div>
+            <div class="stat-flavor">family first · self-determined · honest signal</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">CURRENT STATUS</div>
+            <div class="stat-value">BUILDING THE EXIT</div>
+            <div class="stat-flavor">target retirement: 55 · st. peters, MO</div>
+        </div>
+    </div>
+
+    <div class="lore-section">
+        <p class="lore-paragraph">
+            i build things that make other things <span class="cyan">legible</span> to people who need to decide things.
+            sometimes that means a <span class="crimson">multi-GPU inference workstation</span> humming in the basement.
+            sometimes that means a chart pattern detector that knows when a head-and-shoulders is real.
+            sometimes that means a <span class="highlight">Pocket Oracle</span> that brings AI and compute local.
+        </p>
+        <p class="lore-paragraph">
+            i have an <span class="cyan">antminer S19J Pro</span> in the garage and an antique sense that bitcoin is closer to time
+            than to money. i think information wants to be priced.
+            i think markets are slow oracles.
+            i think most people are running on someone else's clock and don't know it.
+        </p>
+        <p class="lore-paragraph">
+            people ask me for advice on finance, technology, philosophy, history, and life — usually in that order, often in the same conversation.
+            i used to find this exhausting. now i build tools so the answers <span class="highlight">scale</span>.
+        </p>
+        <p class="lore-paragraph">
+            i served. i learned. i'm engineering an exit on my own terms with
+            <span class="crimson">my time</span> of margin and a non-negotiable family-time constraint.
+            this site is part of that engineering.
+        </p>
+    </div>
+
+    <div class="power-section">
+        <h2 class="section-title">⚡ POWER LEVELS ⚡</h2>
+
+        <div class="power-bar">
+            <div class="power-label">
+                <span>CROSS-DOMAIN SYNTHESIS</span>
+                <span class="power-value">94 / 100</span>
+            </div>
+            <div class="power-track"><div class="power-fill" style="width: 94%"></div></div>
+        </div>
+        <div class="power-bar">
+            <div class="power-label">
+                <span>AI INFRASTRUCTURE</span>
+                <span class="power-value">88 / 100</span>
+            </div>
+            <div class="power-track"><div class="power-fill" style="width: 88%"></div></div>
+        </div>
+        <div class="power-bar">
+            <div class="power-label">
+                <span>FINANCE & MARKETS</span>
+                <span class="power-value">85 / 100</span>
+            </div>
+            <div class="power-track"><div class="power-fill" style="width: 85%"></div></div>
+        </div>
+        <div class="power-bar">
+            <div class="power-label">
+                <span>BLOCKCHAIN / BTC</span>
+                <span class="power-value">82 / 100</span>
+            </div>
+            <div class="power-track"><div class="power-fill" style="width: 82%"></div></div>
+        </div>
+        <div class="power-bar">
+            <div class="power-label">
+                <span>WRITING TECHNICAL TO LEGIBLE</span>
+                <span class="power-value">91 / 100</span>
+            </div>
+            <div class="power-track"><div class="power-fill" style="width: 91%"></div></div>
+        </div>
+        <div class="power-bar">
+            <div class="power-label">
+                <span>FAMILY MAN ENERGY</span>
+                <span class="power-value">100 / 100</span>
+            </div>
+            <div class="power-track"><div class="power-fill" style="width: 100%"></div></div>
+        </div>
+        <div class="power-bar">
+            <div class="power-label">
+                <span>CHILL CORPORATE TOLERANCE</span>
+                <span class="power-value">12 / 100</span>
+            </div>
+            <div class="power-track"><div class="power-fill" style="width: 12%; background: linear-gradient(90deg, var(--crimson), var(--hot-pink));"></div></div>
+        </div>
+    </div>
+
+    <div class="power-section">
+        <h2 class="section-title">∴ FLOW STATES ∴</h2>
+        <div class="flow-states">
+            <div class="flow-item"><span class="flow-icon">🛠</span>building AI hardware</div>
+            <div class="flow-item"><span class="flow-icon">🎮</span>gaming</div>
+            <div class="flow-item"><span class="flow-icon">💪</span>working out</div>
+            <div class="flow-item"><span class="flow-icon">👨‍👩‍👧</span>family time</div>
+            <div class="flow-item"><span class="flow-icon">📚</span>absorbing new info</div>
+            <div class="flow-item"><span class="flow-icon">📈</span>finance charting</div>
+            <div class="flow-item"><span class="flow-icon">📖</span>reading</div>
+            <div class="flow-item"><span class="flow-icon">⚙️</span>system synthesis</div>
+        </div>
+    </div>
+
+    <div class="lore-section">
+        <p class="lore-paragraph">
+            <span class="highlight">things i actually believe:</span>
+        </p>
+        <p class="lore-paragraph">
+            ◇ time is the most expensive thing. defend it.<br>
+            ◇ infrastructure beats vibes. but vibes ship the infrastructure.<br>
+            ◇ <span class="cyan">cross-domain insight</span> is the cheat code. depth + breadth = unfair advantage.<br>
+            ◇ bitcoin is a clock that pays interest in <span class="crimson">truth</span>.<br>
+            ◇ if you can explain it to a five-year-old AND a colonel, you've actually understood it.<br>
+            ◇ build small things that compound. avoid big bets you can't iterate on.<br>
+            ◇ no one is coming. it has to be you.
+        </p>
+    </div>
+
+    <div class="secret">
+        <div class="secret-text">"the void stares back, but politely"</div>
+    </div>
+
+    <div class="dossier-footer">
+        ▓▓▓ END OF FILE ▓▓▓ <span class="blink">█</span> <br><br>
+        EVANHAWKINS.COM · CTRL+W TO ESCAPE · CTRL+ALT+DEL TO PRAY
+    </div>
+
+</div>
+
+<script>
+// Trail effect
+document.addEventListener('mousemove', (e) => {
+    if (Math.random() > 0.75) {
+        const t = document.createElement('div');
+        t.className = 'trail';
+        t.style.left = (e.clientX - 4) + 'px';
+        t.style.top = (e.clientY - 4) + 'px';
+        const colors = ['#00f0ff', '#ff2d92', '#ffff00', '#39ff14', '#ffb000'];
+        const c = colors[Math.floor(Math.random() * colors.length)];
+        t.style.background = c;
+        t.style.boxShadow = `0 0 10px ${c}, 0 0 20px ${c}`;
+        document.body.appendChild(t);
+        t.animate([
+            { opacity: 1, transform: 'scale(1) rotate(0deg)' },
+            { opacity: 0, transform: 'scale(0.2) rotate(360deg)' }
+        ], { duration: 500, easing: 'ease-out' });
+        setTimeout(() => t.remove(), 500);
+    }
+});
+</script>
+
+</body>
+</html>
