@@ -243,6 +243,19 @@
         .portal:nth-child(4) { border-color: var(--yellow); animation-delay: 3s; }
         .portal:nth-child(5) { border-color: var(--hot-orange); animation-delay: 4s; }
         .portal.bitcoin-portal { border-color: #f7931a; animation-delay: 0.5s; box-shadow: 0 0 30px rgba(247, 147, 26, 0.5), inset 0 0 20px rgba(247, 147, 26, 0.3); }
+        .portal.oracle-portal { 
+            border-color: #d40000; 
+            animation-delay: 2.5s; 
+            box-shadow: 0 0 30px rgba(212, 0, 0, 0.6), 0 0 60px rgba(255, 176, 0, 0.3), inset 0 0 20px rgba(212, 0, 0, 0.4);
+            background: radial-gradient(circle at center, rgba(20, 5, 5, 0.9), rgba(0, 0, 0, 0.8));
+        }
+        .portal.oracle-portal .portal-icon {
+            color: #ffb000;
+            text-shadow: 0 0 20px #d40000, 0 0 40px #ffb000;
+        }
+        .portal.oracle-portal:hover {
+            box-shadow: 0 0 50px rgba(212, 0, 0, 0.8), 0 0 80px rgba(255, 176, 0, 0.5), inset 0 0 30px rgba(255, 176, 0, 0.3);
+        }
 
         .portal::before {
             content: '';
@@ -881,6 +894,11 @@
         <a href="bitcoinclock.html" class="draggable portal bitcoin-portal" style="left: 140vw; top: 108vh;" data-nav="bitcoinclock">
             <span class="portal-icon">₿</span>
             <span class="portal-label">BTC CLOCK</span>
+        </a>
+
+        <a href="pocket-oracle-buildplan-v1.html" class="draggable portal oracle-portal" style="left: 160vw; top: 168vh;" data-nav="oracle">
+            <span class="portal-icon">✠</span>
+            <span class="portal-label">ORACLE</span>
         </a>
 
         <!-- FLOATING WINDOWS -->
