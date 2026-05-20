@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>// NOW · EVAN HAWKINS</title>
+
+<meta name="description" content="what evan is doing, building, reading, and thinking about right now. a snapshot in time.">
+<meta name="theme-color" content="#39ff14">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+<meta property="og:title" content="// NOW · EVAN HAWKINS">
+<meta property="og:description" content="a snapshot of current focus, builds, reads, and signal.">
+<meta property="og:image" content="https://evanhawkins.com/og-image.png">
+<meta property="og:url" content="https://evanhawkins.com/now.html">
+<meta property="og:type" content="website">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://evanhawkins.com/og-image.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee+Inline&family=VT323&family=Silkscreen&family=JetBrains+Mono:wght@400;700&family=Major+Mono+Display&display=swap" rel="stylesheet">
+<style>
+:root {
+    --hot-pink: #ff2d92;
+    --electric-blue: #00f0ff;
+    --lime-green: #39ff14;
+    --yellow: #ffff00;
+    --void: #000;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+    background: var(--void);
+    color: white;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    line-height: 1.6;
+    cursor: url('catgirl-cursor.png'), auto;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+a, button { cursor: url('catgirl-cursor.png'), pointer; }
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+        repeating-linear-gradient(0deg, transparent 0, transparent 2px, rgba(57, 255, 20, 0.04) 3px, transparent 4px),
+        radial-gradient(ellipse at top right, rgba(57, 255, 20, 0.15), transparent 60%),
+        radial-gradient(ellipse at bottom left, rgba(0, 240, 255, 0.1), transparent 60%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(57, 255, 20, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(57, 255, 20, 0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.home-link {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--lime-green);
+    text-decoration: none;
+    padding: 10px 18px;
+    border: 1px solid var(--lime-green);
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s;
+    text-shadow: 0 0 8px var(--lime-green);
+    letter-spacing: 1px;
+}
+
+.home-link:hover {
+    background: var(--lime-green);
+    color: black;
+    text-shadow: none;
+    box-shadow: 0 0 30px var(--lime-green);
+}
+
+.container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 80px 25px 60px;
+    position: relative;
+    z-index: 10;
+}
+
+.now-header {
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.timestamp {
+    font-family: 'Major Mono Display', monospace;
+    font-size: 0.85rem;
+    color: var(--electric-blue);
+    text-shadow: 0 0 8px var(--electric-blue);
+    margin-bottom: 15px;
+    letter-spacing: 3px;
+}
+
+.page-title {
+    font-family: 'Bungee Inline', cursive;
+    font-size: clamp(3rem, 9vw, 6rem);
+    color: var(--lime-green);
+    text-shadow: 0 0 30px var(--lime-green), 0 0 60px var(--electric-blue);
+    letter-spacing: 4px;
+    line-height: 1;
+}
+
+.subtitle {
+    font-family: 'VT323', monospace;
+    font-size: 1.5rem;
+    color: white;
+    margin-top: 15px;
+    opacity: 0.85;
+}
+
+.subtitle .blink::after {
+    content: '█';
+    animation: blink 1s steps(2) infinite;
+    color: var(--lime-green);
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+.section {
+    margin-bottom: 40px;
+    padding: 25px;
+    background: rgba(0, 0, 0, 0.6);
+    border-left: 4px solid;
+    border-radius: 4px;
+    position: relative;
+    transition: all 0.3s;
+}
+
+.section:hover {
+    background: rgba(0, 0, 0, 0.8);
+    transform: translateX(4px);
+}
+
+.section.building { border-left-color: var(--yellow); box-shadow: 0 0 20px rgba(255, 255, 0, 0.15); }
+.section.reading { border-left-color: var(--electric-blue); box-shadow: 0 0 20px rgba(0, 240, 255, 0.15); }
+.section.thinking { border-left-color: var(--hot-pink); box-shadow: 0 0 20px rgba(255, 45, 146, 0.15); }
+.section.listening { border-left-color: var(--lime-green); box-shadow: 0 0 20px rgba(57, 255, 20, 0.15); }
+.section.avoiding { border-left-color: #ff6b35; box-shadow: 0 0 20px rgba(255, 107, 53, 0.15); }
+
+.section-title {
+    font-family: 'Bungee Inline', cursive;
+    font-size: 1.5rem;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.building .section-title { color: var(--yellow); text-shadow: 0 0 10px var(--yellow); }
+.reading .section-title { color: var(--electric-blue); text-shadow: 0 0 10px var(--electric-blue); }
+.thinking .section-title { color: var(--hot-pink); text-shadow: 0 0 10px var(--hot-pink); }
+.listening .section-title { color: var(--lime-green); text-shadow: 0 0 10px var(--lime-green); }
+.avoiding .section-title { color: #ff6b35; text-shadow: 0 0 10px #ff6b35; }
+
+.section-content {
+    font-family: 'VT323', monospace;
+    font-size: 18px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.section-content em {
+    color: var(--yellow);
+    font-style: normal;
+    text-shadow: 0 0 8px var(--yellow);
+}
+
+.section-content code {
+    background: rgba(57, 255, 20, 0.1);
+    color: var(--lime-green);
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    text-shadow: 0 0 5px var(--lime-green);
+}
+
+.section-content ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 8px;
+}
+
+.section-content li {
+    padding: 4px 0 4px 24px;
+    position: relative;
+}
+
+.section-content li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--lime-green);
+    text-shadow: 0 0 5px var(--lime-green);
+}
+
+.footer-note {
+    margin-top: 50px;
+    padding: 25px;
+    text-align: center;
+    border-top: 1px dashed rgba(57, 255, 20, 0.3);
+    font-family: 'VT323', monospace;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-style: italic;
+}
+
+.footer-note .accent {
+    color: var(--lime-green);
+    text-shadow: 0 0 8px var(--lime-green);
+    font-style: normal;
+}
+
+.trail {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    pointer-events: none;
+    z-index: 99999;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+</style>
+</head>
+<body>
+
+<a href="index.html" class="home-link">← BACK TO VOID</a>
+
+<div class="container">
+
+    <div class="now-header">
+        <div class="timestamp">// LAST UPDATE: <span id="updateDate">MAY 2026</span></div>
+        <h1 class="page-title">/ NOW /</h1>
+        <div class="subtitle">a snapshot of current signal<span class="blink"></span></div>
+    </div>
+
+    <div class="section building">
+        <h2 class="section-title">▸ BUILDING</h2>
+        <div class="section-content">
+            production-stabilizing the <em>Localeksi inference stack</em>. PSU-instability-driven CUDA errors finally tamed.
+            Currently running the FP8 fallback stack at <code>~23 t/s · 110K ctx</code> while I dial in the
+            <em>INT4 + TurboQuant + MTP</em> config that hits <code>37-51 t/s</code> on real ClawdHawk traffic.
+            <br><br>
+            Also: thinking about how the Pocket Oracle build codex v1 becomes v2 — what the minimum viable
+            sovereign inference rig looks like for someone who isn't me.
+        </div>
+    </div>
+
+    <div class="section reading">
+        <h2 class="section-title">▸ READING</h2>
+        <div class="section-content">
+            <ul>
+                <li>papers on speculative decoding and MTP acceptance dynamics</li>
+                <li>federal acquisition regulations (the riveting kind)</li>
+                <li>Bulkowski's chart pattern encyclopedia (still)</li>
+                <li>some philosophy book my wife recommended that I'm pretending to read faster than I am</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section thinking">
+        <h2 class="section-title">▸ THINKING ABOUT</h2>
+        <div class="section-content">
+            How <em>cross-domain insight</em> is the cheat code — depth + breadth = unfair advantage,
+            but only if you can <em>make the synthesis legible</em> to people who haven't done the work.
+            <br><br>
+            Whether the next five years of AI infrastructure look more like the early internet (everyone gets one)
+            or like power plants (a few people get one, everyone rents). The answer determines a lot about
+            what <em>Timechain</em> should build.
+        </div>
+    </div>
+
+    <div class="section listening">
+        <h2 class="section-title">▸ ON REPEAT</h2>
+        <div class="section-content">
+            mostly the hum of four GPUs and the soft whir of an Antminer S19J Pro in the garage. very techno.
+            <br><br>
+            otherwise: whatever my daughter has commandeered the speaker for.
+        </div>
+    </div>
+
+    <div class="section avoiding">
+        <h2 class="section-title">▸ NOT DOING</h2>
+        <div class="section-content">
+            <ul>
+                <li>"quick syncs"</li>
+                <li>partnership decks with no signal</li>
+                <li>raising money I don't need</li>
+                <li>missing my kid's school pickup</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        <span class="accent">// inspired by Derek Sivers</span><br>
+        a /now page is not a blog. it's a snapshot.<br>
+        if it's stale, that's also data.
+    </div>
+
+</div>
+
+<script>
+// Trail
+document.addEventListener('mousemove', (e) => {
+    if (Math.random() > 0.75) {
+        const t = document.createElement('div');
+        t.className = 'trail';
+        t.style.left = (e.clientX - 4) + 'px';
+        t.style.top = (e.clientY - 4) + 'px';
+        const colors = ['#39ff14', '#00f0ff', '#ffff00', '#ff2d92'];
+        const c = colors[Math.floor(Math.random() * colors.length)];
+        t.style.background = c;
+        t.style.boxShadow = `0 0 10px ${c}, 0 0 20px ${c}`;
+        document.body.appendChild(t);
+        t.animate([
+            { opacity: 1, transform: 'scale(1) rotate(0deg)' },
+            { opacity: 0, transform: 'scale(0.2) rotate(360deg)' }
+        ], { duration: 500, easing: 'ease-out' });
+        setTimeout(() => t.remove(), 500);
+    }
+});
+</script>
+
+</body>
+</html>

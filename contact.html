@@ -4,6 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>✉ TRANSMISSION SHRINE ✉ EVAN HAWKINS</title>
+
+<meta name="description" content="open the channel. contact evan hawkins. real problems, real projects, signal worth holding onto.">
+<meta name="theme-color" content="#ffb000">
+
+<meta property="og:title" content="✠ TRANSMISSION SHRINE · EVAN HAWKINS">
+<meta property="og:description" content="open the channel. brevity respected. signal preferred over noise.">
+<meta property="og:image" content="https://evanhawkins.com/og-image.png">
+<meta property="og:url" content="https://evanhawkins.com/contact.html">
+<meta property="og:type" content="website">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="✠ TRANSMISSION SHRINE · EVAN HAWKINS">
+<meta name="twitter:description" content="open the channel.">
+<meta name="twitter:image" content="https://evanhawkins.com/og-image.png">
+<meta name="twitter:creator" content="@eviaeai">
+
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bungee+Inline&family=VT323&family=Silkscreen:wght@400;700&family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@500;700&family=UnifrakturMaguntia&family=Major+Mono+Display&display=swap" rel="stylesheet">
@@ -400,10 +417,10 @@ body::after {
     </div>
 
     <div class="shrine-grid">
-        <a class="shrine-card" href="mailto:evan@timechaintech.com">
+        <a class="shrine-card" id="emailCard" href="#" data-u="evan" data-d="timechaintech.com">
             <div class="shrine-icon">✉</div>
             <div class="shrine-label">Electronic Mail</div>
-            <div class="shrine-value">evan@timechaintech.com</div>
+            <div class="shrine-value" id="emailDisplay">[ reveal address ]</div>
             <div class="shrine-note">best for: serious inquiries, project conversations, signal worth holding onto</div>
             <div class="action-ribbon">▸ COMPOSE</div>
         </a>
@@ -434,6 +451,32 @@ body::after {
 </div>
 
 <script>
+// Email obfuscation - construct mailto on demand, never expose in HTML
+const emailCard = document.getElementById('emailCard');
+const emailDisplay = document.getElementById('emailDisplay');
+let emailRevealed = false;
+
+function buildAddr() {
+    return emailCard.dataset.u + '\u0040' + emailCard.dataset.d;
+}
+
+emailCard.addEventListener('mouseenter', () => {
+    if (!emailRevealed) {
+        emailDisplay.textContent = buildAddr();
+        emailRevealed = true;
+    }
+});
+
+emailCard.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (!emailRevealed) {
+        emailDisplay.textContent = buildAddr();
+        emailRevealed = true;
+        return;
+    }
+    window.location.href = 'mailto:' + buildAddr();
+});
+
 // Sparkle trail
 document.addEventListener('mousemove', (e) => {
     if (Math.random() > 0.75) {

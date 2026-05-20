@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📁 ARCHIVE · EVAN HAWKINS</title>
+
+<meta name="description" content="archive of past transmissions, deprecated thoughts, and discontinued signals.">
+<meta name="theme-color" content="#ffff00">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+<meta property="og:title" content="📁 ARCHIVE · EVAN HAWKINS">
+<meta property="og:description" content="past transmissions. discontinued signals.">
+<meta property="og:image" content="https://evanhawkins.com/og-image.png">
+<meta property="og:url" content="https://evanhawkins.com/archive.html">
+<meta property="og:type" content="website">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://evanhawkins.com/og-image.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee+Inline&family=VT323&family=Silkscreen&family=JetBrains+Mono&family=Bangers&display=swap" rel="stylesheet">
+<style>
+:root {
+    --hot-pink: #ff2d92;
+    --electric-blue: #00f0ff;
+    --yellow: #ffff00;
+    --lime-green: #39ff14;
+    --void: #000;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+    background: var(--void);
+    color: var(--yellow);
+    font-family: 'VT323', monospace;
+    font-size: 18px;
+    min-height: 100vh;
+    cursor: url('catgirl-cursor.png'), auto;
+    overflow-x: hidden;
+}
+
+a { cursor: url('catgirl-cursor.png'), pointer; }
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+        repeating-linear-gradient(0deg, transparent 0, transparent 2px, rgba(255, 255, 0, 0.04) 3px, transparent 4px),
+        radial-gradient(ellipse at top, rgba(255, 255, 0, 0.12), transparent 60%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.home-link {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--yellow);
+    text-decoration: none;
+    padding: 10px 18px;
+    border: 1px solid var(--yellow);
+    background: rgba(0, 0, 0, 0.85);
+    text-shadow: 0 0 8px var(--yellow);
+    transition: all 0.3s;
+}
+
+.home-link:hover {
+    background: var(--yellow);
+    color: black;
+    text-shadow: none;
+    box-shadow: 0 0 30px var(--yellow);
+}
+
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 80px 20px 60px;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon {
+    font-size: 6rem;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 0 30px var(--yellow));
+    animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50% { transform: translateY(-15px) rotate(3deg); }
+}
+
+.page-title {
+    font-family: 'Bungee Inline', cursive;
+    font-size: clamp(3rem, 9vw, 6rem);
+    color: var(--yellow);
+    text-shadow: 0 0 30px var(--yellow), 0 0 60px var(--hot-pink);
+    letter-spacing: 5px;
+    margin-bottom: 20px;
+}
+
+.label {
+    font-family: 'Bangers', cursive;
+    font-size: 1.5rem;
+    color: var(--hot-pink);
+    text-shadow: 2px 2px 0 black, 0 0 15px var(--hot-pink);
+    transform: rotate(-2deg);
+    display: inline-block;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+}
+
+.message {
+    font-size: 1.4rem;
+    line-height: 1.5;
+    color: white;
+    margin-bottom: 30px;
+    max-width: 500px;
+}
+
+.message .accent { color: var(--electric-blue); text-shadow: 0 0 10px var(--electric-blue); }
+.message .yellow { color: var(--yellow); text-shadow: 0 0 10px var(--yellow); }
+
+.fake-listing {
+    margin: 30px 0;
+    text-align: left;
+    width: 100%;
+    max-width: 500px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--lime-green);
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px dashed rgba(255, 255, 0, 0.3);
+    padding: 20px;
+}
+
+.fake-listing .file {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    border-bottom: 1px dashed rgba(57, 255, 20, 0.2);
+}
+
+.fake-listing .file:last-child { border-bottom: none; }
+.fake-listing .file-name { color: var(--yellow); }
+.fake-listing .file-size { color: rgba(255, 255, 255, 0.5); }
+.fake-listing .file-corrupted { color: #ff6b35; }
+.fake-listing .header {
+    color: var(--electric-blue);
+    margin-bottom: 8px;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+.back-btn {
+    display: inline-block;
+    font-family: 'Bangers', cursive;
+    font-size: 1.3rem;
+    color: black;
+    background: var(--yellow);
+    padding: 14px 30px;
+    text-decoration: none;
+    border: 3px solid white;
+    box-shadow: 5px 5px 0 var(--hot-pink), 0 0 30px var(--yellow);
+    letter-spacing: 2px;
+    transition: all 0.2s;
+    margin-top: 20px;
+}
+
+.back-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0 var(--hot-pink), 0 0 40px var(--electric-blue);
+}
+
+.trail {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    pointer-events: none;
+    z-index: 99999;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+</style>
+</head>
+<body>
+
+<a href="index.html" class="home-link">← BACK TO VOID</a>
+
+<div class="container">
+    <div class="icon">📁</div>
+    <h1 class="page-title">ARCHIVE</h1>
+    <div class="label">// COMING SOON //</div>
+
+    <p class="message">
+        the <span class="yellow">archive</span> is being assembled. <br>
+        deprecated experiments, retired mockups, and signals worth keeping<br>
+        will land here when the <span class="accent">cataloging</span> is done.
+    </p>
+
+    <div class="fake-listing">
+        <div class="header">/ARCHIVE/ — INDEXING IN PROGRESS</div>
+        <div class="file"><span class="file-name">001_y2k_mockup_001.html</span><span class="file-size">22 KB</span></div>
+        <div class="file"><span class="file-name">002_galaxy_nodes.html</span><span class="file-size">17 KB</span></div>
+        <div class="file"><span class="file-name">003_void_terminal.html</span><span class="file-size">30 KB</span></div>
+        <div class="file"><span class="file-name">deprecated_dashboard_v1.tsx</span><span class="file-corrupted">[CORRUPTED]</span></div>
+        <div class="file"><span class="file-name">trinity_old_routing.py</span><span class="file-size">8.4 KB</span></div>
+        <div class="file"><span class="file-name">cursed_layout_attempt_v6.html</span><span class="file-corrupted">[REDACTED]</span></div>
+        <div class="file"><span class="file-name">...</span><span class="file-size">+47 more</span></div>
+    </div>
+
+    <a href="index.html" class="back-btn">★ RETURN HOME ★</a>
+</div>
+
+<script>
+document.addEventListener('mousemove', (e) => {
+    if (Math.random() > 0.75) {
+        const t = document.createElement('div');
+        t.className = 'trail';
+        t.style.left = (e.clientX - 4) + 'px';
+        t.style.top = (e.clientY - 4) + 'px';
+        const colors = ['#ffff00', '#ff2d92', '#00f0ff', '#39ff14'];
+        const c = colors[Math.floor(Math.random() * colors.length)];
+        t.style.background = c;
+        t.style.boxShadow = `0 0 10px ${c}, 0 0 20px ${c}`;
+        document.body.appendChild(t);
+        t.animate([
+            { opacity: 1, transform: 'scale(1)' },
+            { opacity: 0, transform: 'scale(0.2) rotate(360deg)' }
+        ], { duration: 500, easing: 'ease-out' });
+        setTimeout(() => t.remove(), 500);
+    }
+});
+</script>
+
+</body>
+</html>
